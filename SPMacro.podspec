@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SPMacro"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Some very convenient macro definition code, developers use convenience.一些简单方便的宏定义帮助开发者快速使用"
 
 
@@ -14,13 +14,13 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "6.0"
 
-  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.2" }
 
    s.source_files  = 'SPMacro/SPMacro/*.{h,m,mm,cpp,c}', 'SPMacro/SPMacro/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SPMacro/SPMacro/*.h', 'SPMacro/SPMacro/*/*.h'
 
   s.framework  = 'UIKit','Foundation'
-  s.library   = 'execinfo', 'objc/objc', 'objc/runtime'
+  s.library   =  'objc/objc', 'objc/runtime'
 
   s.requires_arc = true
 
