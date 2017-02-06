@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
-#import <execinfo.h>
+//#import <execinfo.h>
 //#define TARGET_OS_IPHONE            1
 //#define TARGET_IPHONE_SIMULATOR     1
 
@@ -212,7 +212,7 @@ method_exchangeImplementations(method1, method2);\
 
 @interface SPFoundationMacro : NSObject
 
-+(void)printBacktrace;  // 函数调用堆栈
+//+(void)printBacktrace;  // 函数调用堆栈
 
 +(void)printFatherClass:(id)obj;    // 打印super class
 

@@ -16,21 +16,21 @@
 @implementation SPFoundationMacro
 
 
-// 函数调用堆栈
-+(void)printBacktrace
-{
-    void *callstack[128] = {0};
-    int frameCount = backtrace(callstack, 128);
-    char **frameStrings = backtrace_symbols(callstack, frameCount);
-    if ( frameStrings != NULL ) {
-        // Start with frame 1 because frame 0 is PrintBacktrace()
-        for ( int i = 1; i < frameCount; i++ ) {
-            printf("%s\n", frameStrings[i]);
-            
-        }
-        free(frameStrings);
-    }
-}
+//// 函数调用堆栈
+//+(void)printBacktrace
+//{
+//    void *callstack[128] = {0};
+//    int frameCount = backtrace(callstack, 128);
+//    char **frameStrings = backtrace_symbols(callstack, frameCount);
+//    if ( frameStrings != NULL ) {
+//        // Start with frame 1 because frame 0 is PrintBacktrace()
+//        for ( int i = 1; i < frameCount; i++ ) {
+//            printf("%s\n", frameStrings[i]);
+//            
+//        }
+//        free(frameStrings);
+//    }
+//}
 
 
 +(void)printFatherClass:(id)obj
