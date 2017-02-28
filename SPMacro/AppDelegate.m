@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "SPFoundationMacro.h"
 @interface AppDelegate ()
 
 @end
@@ -17,6 +17,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //   CGFloat time =  [SPFoundationMacro calculateRunTimeBlock:^{
+    //        NSLog(@"nihaoma");
+    //    }];
+    
+    CGFloat time =  SP_CalculateTime(
+        
+                             
+                                     NSLog(@"nihaoma")
+        
+    );
+    
+    SP_Log(@"执行时间为%f",time);
+    
+    SP_Global_Thread_Run(
+                       
+                       SP_Log(@"我在主线程运行%@",SP_Is_Main_Thread?@"yes":@"no"
+                              )
+                       
+                       );
+    
     return YES;
 }
 

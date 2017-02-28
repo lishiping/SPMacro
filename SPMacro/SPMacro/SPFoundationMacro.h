@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
+#import <mach/mach_time.h>
 //#import <execinfo.h>
 //#define TARGET_OS_IPHONE            1
 //#define TARGET_IPHONE_SIMULATOR     1
@@ -41,6 +42,10 @@
 #else
 
 #endif
+
+//--------------------计算代码运算时间---------------------------
+#define SP_CalculateTime(block) [SPFoundationMacro calculateRunTimeBlock:^{(block);}]
+
 
 //--------------------类型判断---------------------------
 
@@ -89,7 +94,7 @@
 #define ASSERT_MainThread()             ASSERT(SP_Is_Main_Thread)
 
 // 使block在主线程中运行
-#define SP_Main_Thread_Run(block)    if (SP_Is_Main_Thread) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
+#define SP_Main_Thread_Run(block)    if (SP_Is_Main_Thread) {(block);} else {dispatch_sync(dispatch_get_main_queue(), ^{(block);});}
 
 // 使block在子线程中运行
 #define SP_Global_Thread_Run(block)    if (!SP_Is_Main_Thread) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
@@ -217,5 +222,15 @@ method_exchangeImplementations(method1, method2);\
 +(void)printFatherClass:(id)obj;    // 打印super class
 
 +(void)ios_dialPhone:(NSString *)phoneNumber needAlert:(BOOL)isNeedAlert;
+
+
+/**
+ 计算代码块的执行时间的方法,用来验证算法的执行效率等其他需要测试执行时间的代码
+
+ @param block 代码块
+ @return 返回毫秒运算时间
+ */
++(CGFloat)calculateRunTimeBlock:(void (^)(void))block;
+
 
 @end

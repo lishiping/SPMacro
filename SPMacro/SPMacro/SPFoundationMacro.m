@@ -58,6 +58,30 @@
     }
 }
 
+/**
+ 计算代码执行时间的方法（相比其他方法要好一些）
+ 
+ @param block 要执行的代码块
+ 
+ @return 返回毫秒时间
+ */
++(CGFloat)calculateRunTimeBlock:(void (^)(void))block
+{
+    mach_timebase_info_data_t info;
+    if (mach_timebase_info(&info) != KERN_SUCCESS) return 0.0;
+    
+    uint64_t start = mach_absolute_time ();
+    block();
+    uint64_t end = mach_absolute_time ();
+    uint64_t elapsed = end - start;
+    
+    uint64_t nanos = elapsed * info.numer / info.denom;//得到纳秒
+    //    return (CGFloat)nanos / NSEC_PER_SEC;
+    return (CGFloat)nanos / NSEC_PER_MSEC; //计算结果是毫秒
+    
+}
+
+
 @end
 
 

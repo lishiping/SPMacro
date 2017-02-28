@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SPMacro"
-  s.version      = "0.0.8"
+  s.version      = "0.0.9"
   s.summary      = "Some very convenient macro definition code, developers use convenience.一些简单方便的宏定义帮助开发者快速使用"
 
 
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "6.0"
 
-  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.8" }
+  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.9" }
 
    s.source_files  = 'SPMacro/SPMacro/*.{h,m,mm,cpp,c}', 'SPMacro/SPMacro/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SPMacro/SPMacro/*.h', 'SPMacro/SPMacro/*/*.h'
