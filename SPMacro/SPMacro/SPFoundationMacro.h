@@ -14,105 +14,134 @@
 //#define TARGET_OS_IPHONE            1
 //#define TARGET_IPHONE_SIMULATOR     1
 
-//--------------------强弱引用---------------------------
+//------------------weak strong reference----------------
+//--------------------弱强引用---------------------------
 
-#define SP_weakSelf          __weak __typeof(self) weakSelf = self;
-#define SP_strongSelf        __strong __typeof(weakSelf)strongSelf = weakSelf;
+#define SP_WEAK_SELF          __weak __typeof(self) weakSelf = self;
+#define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
 
+
+//--------------------Print log---------------------------
 //--------------------打印日志---------------------------
 
-#pragma mark - LOG & 断言
-
-#define SP_String_Format(fmt, ...)      [NSString stringWithFormat:(@"%z, %s(line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__]
+#define SP_STRING_FORMAT(fmt, ...)      [NSString stringWithFormat:(@"%z, %s(line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__]
 
 #if DEBUG
 
-#define SP_Log(fmt, ...)           {NSLog((@"%s (line %d) " fmt), __FUNCTION__, __LINE__, ##__VA_ARGS__);}
+#define SP_LOG(...) NSLog(__VA_ARGS__);
 
-#define SP_Log_If(x, fmt, ...)     if (x) {SP_Log(fmt, ##__VA_ARGS__)}
+#define SP_LOG_FMT(fmt, ...) NSLog((@"%s (line %d) " fmt), __FUNCTION__, __LINE__, ##__VA_ARGS__);
+
+#define SP_LOG_IF(x, fmt, ...) if (x) {SP_LOG_FMT(fmt, ##__VA_ARGS__);}
 
 #define ASSERT(x)               assert((x))
 
-#define SP_Printf(fmt, ...)                {printf(("%ld, %s (line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__);}
+#define SP_PRINTF(fmt, ...)  printf(("%ld, %s (line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 // 打印super class
-#define SP_Print_FatherClasss(obj) [SPFoundationMacro printFatherClass:obj]
+#define SP_PRINT_FATHERCLASS(obj) [SPFoundationMacro printFatherClass:obj];
 
 
 #else
 
+
+#define SP_LOG(...)
+
+#define SP_LOG_FMT(fmt, ...)
+
+#define SP_LOG_IF(x, fmt, ...)
+
+#define ASSERT(x)
+
+#define SP_PRINTF(fmt, ...)
+
+#define SP_PRINT_FATHERCLASS(obj)
+
+
 #endif
 
-//--------------------计算代码运算时间---------------------------
-#define SP_CalculateTime(block) [SPFoundationMacro calculateRunTimeBlock:^{(block);}]
+
+//------Code execution time(return min seconds）-------------
+//------------------代码运算时间(返回毫秒时间)------------------
+
+#define SP_EXECUTE_TIME(block) [SPFoundationMacro calculateRunTimeBlock:^{(block);}];
 
 
-//--------------------类型判断---------------------------
+//------------------Kind Of Class---------------------
+//------------------类型判断---------------------------
 
-#define SP_isKindOf(x, cls)                [(x) isKindOfClass:[cls class]]         // 判断实例类型(含父类)
+// 判断实例类型(含父类)
+#define SP_IS_KIND_OF(obj, cls)                [(obj) isKindOfClass:[cls class]]
 
-#define SP_isMemberOf(x, cls)              [(x) isMemberOfClass:[cls class]]       // 判断实例类型(不含父类)
+// 判断实例类型(不含父类)
+#define SP_IS_MEMBER_OF(x, cls)              [(x) isMemberOfClass:[cls class]]
 
+
+//--------------------Notification---------------------------
 //--------------------通知---------------------------
-
-#pragma mark - NSNotificationCenter（通知）
 
 #define __SP  [NSNotificationCenter defaultCenter]
 
 // 添加观察者
-#define SP_Add_Observer(__obj, __sel, __name, __message)      [__SP addObserver:__obj selector:__sel name:__name object:__message]
+#define SP_ADD_ObSERVER(__obj, __sel, __name, __message)      [__SP addObserver:__obj selector:__sel name:__name object:__message]
 
 // 发送消息（同步）
-#define SP_Post_Notification(__name, __message)                 [__SP postNotificationName:__name object:__message]
+#define SP_POST_NOTI(__name, __message)                 [__SP postNotificationName:__name object:__message]
 
 // 取消观察
-#define SP_Remove_Self                     [__SP removeObserver:self]
+#define SP_REMOVE_SELF                     [__SP removeObserver:self]
 
-#define SP_Remove(__obj)                    [__SP removeObserver:__obj]
+#define SP_REMOVE(__obj)                    [__SP removeObserver:__obj]
 
-#define SP_Remove_Name(__obj, __name, __message)      [__SP removeObserver:__obj name:__name object:__message]
+#define SP_REMOVE_NAME(__obj, __name, __message)      [__SP removeObserver:__obj name:__name object:__message]
 
 
+//--------------------APP Version----------------------
 //--------------------APP版本---------------------------
 
 //获取APP版本
-#ifndef SP_AppVersion
-#define SP_AppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+#ifndef SP_APP_VERSION
+#define SP_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
 //获取APP的build版本
-#define SP_AppBuildVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
+#define SP_APP_BUILD_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
 
 #endif
 
 
+//--------------------Thread------------------------
 //--------------------线程---------------------------
 
-// 判断是否主线程
-#define SP_Is_Main_Thread                [NSThread isMainThread]
+// (is main thread)判断是否主线程
+#define SP_IS_MAIN_THREAD                [NSThread isMainThread]
 
-// 断言在主线程中
-#define ASSERT_MainThread()             ASSERT(SP_Is_Main_Thread)
+// (assert main thread)断言在主线程中
+#define ASSERT_MAIN_THREAD()             ASSERT(SP_IS_MAIN_THREAD)
 
-// 使block在主线程中运行
-#define SP_Main_Thread_Run(block)    if (SP_Is_Main_Thread) {(block);} else {dispatch_sync(dispatch_get_main_queue(), ^{(block);});}
+// (run in main thread)使block在主线程中运行
+#define SP_MAIN_THREAD_RUN(block)    if (SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
 
-// 使block在子线程中运行
-#define SP_Global_Thread_Run(block)    if (!SP_Is_Main_Thread) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
+// (run inf global thread)使block在子线程中运行
+#define SP_GlOBAL_THREAD_RUN(block)    if (!SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
 
-// 安全运行block
-#define SP_Call_Back_Block(block, ...)     if (block) {block(__VA_ARGS__);}
+// (safe run block)安全运行block
+#define SP_BLOCK(block, ...)     if (block) {block(__VA_ARGS__);}
 
+
+
+//--------------------dial phone------------------------
 //--------------------拨打电话---------------------------
 
 
 /**
+ Call the system call
  调用系统拨打电话
 
  @param phoneNumber 电话号码
  @param isNeedAlert 是否弹出alert询问
 
  */
-#define SP_DialPhone(phoneNumber,isNeedAlert) [SPFoundationMacro ios_dialPhone:phoneNumber needAlert:isNeedAlert]
+#define SP_DIAL_PHONE(phoneNumber,isNeedAlert) [SPFoundationMacro ios_dialPhone:phoneNumber needAlert:isNeedAlert]
 
 //--------------------沙盒路径---------------------------
 
@@ -123,19 +152,20 @@
 #define SP_Path_Document      [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 
+//--------------------file---------------------------
 //--------------------文件---------------------------
 
 //判断文件是否存在
-#define SP_Is_FileExist(path)             [[NSFileManager defaultManager] fileExistsAtPath:(path)]
+#define SP_IS_FILE_EXIST(path)             [[NSFileManager defaultManager] fileExistsAtPath:(path)]
 
 
+//--------------Reference counting----------------------
 //--------------------引用计数---------------------------
 
-#pragma mark - 内存 & 引用计数
 
-#define MRC_Retain(x)           [(x) retain]
-#define MRC_Copy(x)             [(x) copy]
-#define MRC_Release(x)          {if(x){[(x) release];(x)=nil;}}
+#define MRC_Retain(x)           [(x) retain];
+#define MRC_Copy(x)             [(x) copy];
+#define MRC_Release(x)          {if(x){[(x) release];}}
 #define MRC_Release_View(x)     {if(x){[(x) removeFromSuperview];[(x) release];(x)=nil;}}
 #define MRC_Dealloc(x)          [(x) dealloc];
 
@@ -146,10 +176,6 @@
 #define ARC_Release_View(x)     {if(x){[(x) removeFromSuperview];(x)=nil;}}
 #define ARC_Dealloc(x)
 
-
-#define SAFE_Free(x)            if(x){free(x);(x)=NULL;}
-#define SAFE_Delete(x)          {if(x){delete (x);(x)=NULL;}}
-#define SAFE_DeleteA(x)         {if(x){delete [](x);(x)=NULL;}}
 
 //判断是不是支持arc模式
 #if __has_feature(objc_arc)
@@ -181,9 +207,12 @@
 //#define IOS8_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_8_0)
 //#define IOS9_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_9_0)
 
+
+
+//--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
-#define SP_LanguageIsEnglish()         [preferredLanguage() isEqualToString:@"en"]
+#define SP_LANGUAGE_IS_EN()         [preferredLanguage() isEqualToString:@"en"]
 
 
 //--------------------runtime---------------------------

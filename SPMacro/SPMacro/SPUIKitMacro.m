@@ -109,7 +109,7 @@ void doPrintViewAndSubviews(UIView *view, int level)
 + (UIImage *)captureWithView:(UIView *)view;
 {
     UIImage *ret = nil;
-    if (SP_isKindOf(view, UIScrollView))
+    if (SP_IS_KIND_OF(view, UIScrollView))
     {
         UIScrollView *scrollView = (UIScrollView *)view;
         UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, scrollView.opaque, 0.0);
