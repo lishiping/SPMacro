@@ -83,7 +83,7 @@
 #define __SP  [NSNotificationCenter defaultCenter]
 
 // 添加观察者
-#define SP_ADD_ObSERVER(__obj, __sel, __name, __message)      [__SP addObserver:__obj selector:__sel name:__name object:__message]
+#define SP_ADD_OBSERVER(__obj, __sel, __name, __message)      [__SP addObserver:__obj selector:__sel name:__name object:__message]
 
 // 发送消息（同步）
 #define SP_POST_NOTI(__name, __message)                 [__SP postNotificationName:__name object:__message]
@@ -143,13 +143,15 @@
  */
 #define SP_DIAL_PHONE(phoneNumber,isNeedAlert) [SPFoundationMacro ios_dialPhone:phoneNumber needAlert:isNeedAlert]
 
+
+//--------------------SandBox Path---------------------------
 //--------------------沙盒路径---------------------------
 
 //沙盒缓存路径
-#define SP_Path_Cache      [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define SP_PATH_CACHE      [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 //沙盒文档路径
-#define SP_Path_Document      [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define SP_PATH_DOCUMENT     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 
 //--------------------file---------------------------
