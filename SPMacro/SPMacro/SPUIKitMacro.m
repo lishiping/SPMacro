@@ -188,7 +188,7 @@ void doPrintViewAndSubviews(UIView *view, int level)
     if (!(name.length>0)) {
         return NO;
     }
-    NSString *filepath = SP_Path_Document;
+    NSString *filepath = SP_PATH_DOCUMENT;
     [filepath stringByAppendingString:name];
     
     BOOL ret = [[self class] saveImageToFileWith:image path:filepath withJPEG:1 orPNG:YES];
@@ -200,7 +200,7 @@ void doPrintViewAndSubviews(UIView *view, int level)
     if (!(name.length>0)) {
         return NO;
     }
-    NSString *filepath = SP_Path_Document;
+    NSString *filepath = SP_PATH_DOCUMENT;
     [filepath stringByAppendingString:name];
     
     BOOL ret = [[self class] saveImageToFileWith:image path:filepath withJPEG:0 orPNG:YES];

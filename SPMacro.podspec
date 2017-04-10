@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SPMacro"
-  s.version      = "0.0.10"
+  s.version      = "0.0.11"
   s.summary      = "The macro of Foundation and UIKit,print,type,notification,threads,screen adaptation,colors etc. Foundation,UIKit层宏定义，打印，类型，通知，线程等，屏幕适配，颜色等"
 
 
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "6.0"
 
-  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.10" }
+  s.source       = { :git => "https://github.com/lishiping/SPMacro.git", :tag => "0.0.11" }
 
    s.source_files  = 'SPMacro/SPMacro/*.{h,m,mm,cpp,c}', 'SPMacro/SPMacro/*/*.{h,m,mm,cpp,c}'
    s.public_header_files = 'SPMacro/SPMacro/*.h', 'SPMacro/SPMacro/*/*.h'
