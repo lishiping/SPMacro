@@ -79,8 +79,7 @@
 
     CGFloat nanoTime =(CGFloat)nanos / NSEC_PER_MSEC;
     
-    NSString *text =SP_LANGUAGE_IS_EN()?@"CODE EXECUTE_TIME":@"代码执行时间";
-    SP_LOG(@"%@=%.2fms",text,nanoTime);
+    SP_LOG(@"%@=%.2fms",SP_LANGUAGE_IS_EN()?@"CODE EXECUTE_TIME":@"代码执行时间",nanoTime);
     
     return nanoTime; //计算结果是毫秒
 }
