@@ -76,9 +76,13 @@
     uint64_t elapsed = end - start;
     
     uint64_t nanos = elapsed * info.numer / info.denom;//得到纳秒
-    //    return (CGFloat)nanos / NSEC_PER_SEC;
-    return (CGFloat)nanos / NSEC_PER_MSEC; //计算结果是毫秒
+
+    CGFloat nanoTime =(CGFloat)nanos / NSEC_PER_MSEC;
     
+    NSString *text =SP_LANGUAGE_IS_EN()?@"CODE EXECUTE_TIME":@"代码执行时间";
+    SP_LOG(@"%@=%.2fms",text,nanoTime);
+    
+    return nanoTime; //计算结果是毫秒
 }
 
 

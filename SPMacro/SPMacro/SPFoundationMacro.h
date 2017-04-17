@@ -64,6 +64,13 @@
 //------Code execution time(return min seconds）-------------
 //------------------代码运算时间(返回毫秒时间)------------------
 
+/*
+ CGFloat time =  SP_EXECUTE_TIME({
+ sleep(2);
+ });
+ 
+ SP_LOG(@"代码执行时间%fms",time);
+ */
 #define SP_EXECUTE_TIME(block) [SPFoundationMacro calculateRunTimeBlock:^{(block);}];
 
 
@@ -121,7 +128,7 @@
 // (run in main thread)使block在主线程中运行
 #define SP_MAIN_THREAD_RUN(block)    if (SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
 
-// (run inf global thread)使block在子线程中运行
+// (run in global thread)使block在子线程中运行
 #define SP_GlOBAL_THREAD_RUN(block)    if (!SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
 
 // (safe run block)安全运行block
@@ -136,22 +143,65 @@
 /**
  Call the system call
  调用系统拨打电话
-
+ 
  @param phoneNumber 电话号码
  @param isNeedAlert 是否弹出alert询问
-
+ 
  */
 #define SP_DIAL_PHONE(phoneNumber,isNeedAlert) [SPFoundationMacro ios_dialPhone:phoneNumber needAlert:isNeedAlert]
+
 
 
 //--------------------SandBox Path---------------------------
 //--------------------沙盒路径---------------------------
 
-//沙盒缓存路径
-#define SP_PATH_CACHE      [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+//获取沙盒主目录路径
+#define SP_PATH_HOME NSHomeDirectory()
 
 //沙盒文档路径
+/*Documents 目录：您应该将所有应用程序数据文件写入到这个目录下。这个目录用于存储用户数据或其它应该定期备份的信息。
+ ②是否会被iTunes同步
+ 是
+ */
 #define SP_PATH_DOCUMENT     [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+
+//沙盒library路径
+/*Library目录：这个目录下有两个子目录：Preference,Caches
+ ①存放内容
+ 苹果建议用来存放默认设置或其它状态信息。该路径下的文件夹，除Caches以外，都会被iTunes备份。
+ ②是否会被iTunes同步
+ 是，但是要除了Caches子目录外
+ */
+#define SP_PATH_LIBRARY      [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+
+//沙盒Preference路径
+/*①存放内容
+ 应用程序的偏好设置文件,配置目录，配置文件。我们使用NSUserDefaults写的设置数据都会保存到该目录下的一个plist文件中，这就是所谓的写到plist中！
+ ②是否会被iTunes同步
+ 是
+ */
+#define SP_PATH_PREFERENCE      [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Preference"]
+
+
+//沙盒Caches缓存路径
+//Caches 目录：用于存放应用程序专用的支持文件，保存应用程序再次启动过程中需要的信息,存储项目缓存,常用设置。可创建子文件夹。可以用来放置您希望被备份但不希望被用户看到的数据。
+/*①存放内容
+ 主要是缓存文件，用户使用过程中缓存都可以保存在这个目录中。前面说过，Documents目录用于保存不可再生的文件，那么这个目录就用于保存那些可再生的文件，比如网络请求的数据。鉴于此，应用程序通常还需要负责删除这些文件。
+ ②是否会被iTunes同步
+ 否。
+ */
+#define SP_PATH_CACHE      [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+
+//沙盒tmp路径
+//tmp 目录：这个目录用于存放临时文件，保存应用程序再次启动过程中不需要的信息。该路径下的文件不会被iTunes备份。
+/*①存放内容
+ 各种临时文件，保存应用再次启动时不需要的文件。而且，当应用不再需要这些文件时应该主动将其删除，因为该目录下的东西随时有可能被系统清理掉，目前已知的一种可能清理的原因是系统磁盘存储空间不足的时候。
+ ②是否会被iTunes同步
+ 否
+ */
+#define SP_PATH_TMP      NSTemporaryDirectory()
 
 
 //--------------------file---------------------------
@@ -186,7 +236,7 @@
 #define OC_Copy(x)              ARC_Copy(x)
 #define OC_Release(x)           ARC_Release(x)
 #define OC_Release_View(x)      ARC_Release_View(x)
-#define OC_SuperDealloc         
+#define OC_SuperDealloc
 
 #else
 
@@ -214,7 +264,8 @@
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
-#define SP_LANGUAGE_IS_EN()         [preferredLanguage() isEqualToString:@"en"]
+//判断本地语言是不是英语
+#define SP_LANGUAGE_IS_EN()         [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"en"]
 
 
 //--------------------runtime---------------------------
@@ -257,9 +308,9 @@ method_exchangeImplementations(method1, method2);\
 
 /**
  计算代码块的执行时间的方法,用来验证算法的执行效率等其他需要测试执行时间的代码
-
+ 
  @param block 代码块
- @return 返回毫秒运算时间
+ @return (return ms time)返回毫秒运算时间
  */
 +(CGFloat)calculateRunTimeBlock:(void (^)(void))block;
 

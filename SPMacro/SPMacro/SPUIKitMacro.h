@@ -61,6 +61,11 @@
 //iphone6P和iPhone7P的屏幕
 #define SP_IS_IPHONE6P_6SP_7P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
 
+//iPad Air,iPad Air2,iPad Pro9.7inch,iPad Retina的屏幕
+#define SP_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
+
+//iPad Pro12.9inch的屏幕
+#define SP_IS_IPAD_PRO12 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1024, 1366), [UIScreen mainScreen].bounds.size) : NO)
 
 //--------------------Font---------------------------
 //--------------------字体---------------------------
@@ -70,14 +75,17 @@
 #define SP_FONT_NAME_SIZE(name,size) [UIFont fontWithName:(name) size:(size)]
 
 
-//-------------------color---------------------------
+//-------------------Color---------------------------
 //--------------------颜色---------------------------
 
-#define SP_COLOR(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+#define SP_COLOR_RGB(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
 
+#define SP_COLOR_RGBA(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:a/1.0]
+
+//Hexadecimal color to color object
 //16进制数转为颜色对象
 //SP_COLOR_RGB(0X1E1E1E);
-#define SP_COLOR_RGB(hexValue) [UIColor colorWith\
+#define SP_COLOR_HEX_RGB(hexValue) [UIColor colorWith\
 Red     :(hexValue & 0xFF0000)     / (float)0xFF0000 \
 green   :(hexValue & 0xFF00)       / (float)0xFF00 \
 blue    :(hexValue & 0xFF)         / (float)0xFF \
@@ -85,7 +93,7 @@ alpha   :1.0]
 
 //16进制数转为颜色对象
 //SP_COLOR_RGBA(0X1E1E1E);
-#define SP_COLOR_RGBA(hexValue) [UIColor colorWith\
+#define SP_COLOR_HEX_RGBA(hexValue) [UIColor colorWith\
 Red     :(hexValue & 0xFF000000)  / (float)0xFF000000 \
 green   :(hexValue & 0xFF0000)    / (float)0xFF0000 \
 blue    :(hexValue & 0xFF00)      / (float)0xFF00 \
@@ -94,7 +102,7 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //Hexadecimal string color to the color object
 //16进制字符串颜色转为颜色对象
 //SP_COLOR_HEX(@"#1E1E1E");
-#define SP_COLOR_HEX(hexstring)       [SPUIKitMacro colorWithHexString:(hexstring)]
+#define SP_COLOR_HEX_STR(hexstring)       [SPUIKitMacro colorWithHexString:(hexstring)]
 
 
 //--------------------image---------------------------
@@ -102,6 +110,8 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 
 #define SP_IMAGE(name)           [UIImage imageNamed:(name)]
 #define SP_IMAGE_VIEW(name)      [[UIImageView alloc] initWithImage:SP_IMAGE(name)]
+
+#define SP_IMAGE_FILE(file)        [UIImage imageWithContentsOfFile:file]
 #define SP_IMAGE_CG(x)        [UIImage imageWithCGImage:(x)]
 #define SP_IMAGE_DATA(data)      [UIImage imageWithData:(data)]
 
@@ -109,7 +119,7 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //根据视图截屏
 #define SP_IMAGE_CAPTURE(view)     [SPUIKitMacro captureWithView:view];
 
-//获取指定大小的图片，保存原图片比例
+//获取指定大小的图片，等比例
 #define SP_IMAGE_COMPRESS(image,size)     [SPUIKitMacro compressImage:image toSize:size];
 
 //获取图片根据给定颜色
