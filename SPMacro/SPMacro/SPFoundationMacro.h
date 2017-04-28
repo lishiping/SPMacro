@@ -6,6 +6,16 @@
 //  Copyright (c) 2012年 李世平. All rights reserved.
 //
 
+//If you feel the WebView open source is of great help to you, please give the author some praise, recognition you give great encouragement, the author also hope you give the author other open source libraries some praise, the author will release better open source library for you again
+//如果您感觉本开源WebView对您很有帮助，请给作者点个赞，您的认可给作者极大的鼓励，也希望您给作者其他的开源库点个赞，作者还会再发布更好的开源库给大家
+
+//github address//https://github.com/lishiping/SPWebView
+//github address//https://github.com/lishiping/SPDebugBar
+//github address//https://github.com/lishiping/SPFastPush
+//github address//https://github.com/lishiping/SPMacro
+//github address//https://github.com/lishiping/SafeData
+
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <objc/runtime.h>
@@ -17,8 +27,18 @@
 //------------------weak strong reference----------------
 //--------------------弱强引用---------------------------
 
+//判断是不是支持arc模式
+#if __has_feature(objc_arc)
+
 #define SP_WEAK_SELF          __weak __typeof(self) weakSelf = self;
 #define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+#else
+
+#define SP_WEAK_SELF          __block __typeof(self) weakSelf = self;
+#define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
+
+#endif
 
 
 //--------------------Print log---------------------------
