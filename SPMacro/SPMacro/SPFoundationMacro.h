@@ -1,19 +1,19 @@
 //
 //  SPFoundationMacro.h
-//  83118274@qq.com
+//  e-mail:83118274@qq.com
 //
-//  Created by 李世平 on 12-2-21.
-//  Copyright (c) 2012年 李世平. All rights reserved.
+//  Created by lishiping on 16/11/11.
+//  Copyright (c) 2016年 lishiping. All rights reserved.
 //
-
-//If you feel the WebView open source is of great help to you, please give the author some praise, recognition you give great encouragement, the author also hope you give the author other open source libraries some praise, the author will release better open source library for you again
-//如果您感觉本开源WebView对您很有帮助，请给作者点个赞，您的认可给作者极大的鼓励，也希望您给作者其他的开源库点个赞，作者还会再发布更好的开源库给大家
+//If you think this open source library is of great help to you, please open the URL to click the Star,your approbation can encourage me, the author will publish the better open source library for guys again
+//如果您认为本开源库对您很有帮助，请打开URL给作者点个赞，您的认可给作者极大的鼓励，作者还会发布更好的开源库给大家
 
 //github address//https://github.com/lishiping/SPWebView
 //github address//https://github.com/lishiping/SPDebugBar
 //github address//https://github.com/lishiping/SPFastPush
 //github address//https://github.com/lishiping/SPMacro
 //github address//https://github.com/lishiping/SafeData
+//github address//https://github.com/lishiping/SPCategory
 
 
 #import <Foundation/Foundation.h>
@@ -21,8 +21,6 @@
 #import <objc/runtime.h>
 #import <mach/mach_time.h>
 //#import <execinfo.h>
-//#define TARGET_OS_IPHONE            1
-//#define TARGET_IPHONE_SIMULATOR     1
 
 //------------------weak strong reference----------------
 //--------------------弱强引用---------------------------
@@ -31,11 +29,13 @@
 #if __has_feature(objc_arc)
 
 #define SP_WEAK_SELF          __weak __typeof(self) weakSelf = self;
+#define SP_WEAK(obj)          __weak __typeof(obj) weak##obj = obj;
 #define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
 
 #else
 
 #define SP_WEAK_SELF          __block __typeof(self) weakSelf = self;
+#define SP_WEAK(obj)          __block __typeof(obj) weak##obj = obj;
 #define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
 
 #endif
@@ -46,6 +46,8 @@
 
 #define SP_STRING_FORMAT(fmt, ...)      [NSString stringWithFormat:(@"%z, %s(line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__]
 
+
+
 #if DEBUG
 
 #define SP_LOG(...) NSLog(__VA_ARGS__);
@@ -53,8 +55,6 @@
 #define SP_LOG_FMT(fmt, ...) NSLog((@"%s (line %d) " fmt), __FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 #define SP_LOG_IF(x, fmt, ...) if (x) {SP_LOG_FMT(fmt, ##__VA_ARGS__);}
-
-#define ASSERT(x)               assert((x))
 
 #define SP_PRINTF(fmt, ...)  printf(("%ld, %s (line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__);
 
@@ -71,14 +71,40 @@
 
 #define SP_LOG_IF(x, fmt, ...)
 
-#define ASSERT(x)
-
 #define SP_PRINTF(fmt, ...)
 
 #define SP_PRINT_FATHERCLASS(obj)
 
 
 #endif
+
+
+//--------------------assert---------------------------
+//--------------------断言---------------------------
+
+#if DEBUG
+
+
+#define SP_ASSERT(obj)               assert((obj))
+
+#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((x) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+
+// (assert main thread)断言在主线程中
+#define SP_ASSERT_MAIN_THREAD             SP_ASSERT(SP_IS_MAIN_THREAD)
+
+
+#else
+
+
+#define SP_ASSERT(obj)
+
+#define SP_ASSERT_CLASS(obj, cls)
+
+#define SP_ASSERT_MAIN_THREAD
+
+
+#endif
+
 
 
 //------Code execution time(return min seconds）-------------
@@ -102,6 +128,9 @@
 
 // 判断实例类型(不含父类)
 #define SP_IS_MEMBER_OF(x, cls)              [(x) isMemberOfClass:[cls class]]
+
+// 判断实例类型(是否是子类)
+#define SP_IS_SUBCLASS_OF(x, cls)              [(x) isSubclassOfClass:[cls class]]
 
 
 //--------------------Notification---------------------------
@@ -142,14 +171,11 @@
 // (is main thread)判断是否主线程
 #define SP_IS_MAIN_THREAD                [NSThread isMainThread]
 
-// (assert main thread)断言在主线程中
-#define ASSERT_MAIN_THREAD()             ASSERT(SP_IS_MAIN_THREAD)
-
 // (run in main thread)使block在主线程中运行
-#define SP_MAIN_THREAD_RUN(block)    if (SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
+#define SP_RUN_MAIN_THREAD(block)    if (SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
 
 // (run in global thread)使block在子线程中运行
-#define SP_GlOBAL_THREAD_RUN(block)    if (!SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
+#define SP_RUN_GlOBAL_THREAD(block)    if (!SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
 
 // (safe run block)安全运行block
 #define SP_BLOCK(block, ...)     if (block) {block(__VA_ARGS__);}
