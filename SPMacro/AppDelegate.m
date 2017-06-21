@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "SPFoundationMacro.h"
+
 @interface AppDelegate ()
 
 @end

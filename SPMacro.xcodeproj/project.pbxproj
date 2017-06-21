@@ -18,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E139666C1EFA2B4C00C847CA /* SPBlockDefine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPBlockDefine.h; sourceTree = "<group>"; };
 		E159C2901E45DDD4003C51F6 /* SPMacro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SPMacro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E159C2941E45DDD4003C51F6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E159C2961E45DDD4003C51F6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -32,6 +33,7 @@
 		E159C2AC1E45DFAC003C51F6 /* SPFoundationMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPFoundationMacro.m; sourceTree = "<group>"; };
 		E159C2AD1E45DFAC003C51F6 /* SPUIKitMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SPUIKitMacro.h; sourceTree = "<group>"; };
 		E159C2AE1E45DFAC003C51F6 /* SPUIKitMacro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SPUIKitMacro.m; sourceTree = "<group>"; };
+		E1E7B0471EFA415B004AF5A1 /* SPMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMacro.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,10 +91,12 @@
 		E159C2AA1E45DFAC003C51F6 /* SPMacro */ = {
 			isa = PBXGroup;
 			children = (
+				E139666C1EFA2B4C00C847CA /* SPBlockDefine.h */,
 				E159C2AB1E45DFAC003C51F6 /* SPFoundationMacro.h */,
 				E159C2AC1E45DFAC003C51F6 /* SPFoundationMacro.m */,
 				E159C2AD1E45DFAC003C51F6 /* SPUIKitMacro.h */,
 				E159C2AE1E45DFAC003C51F6 /* SPUIKitMacro.m */,
+				E1E7B0471EFA415B004AF5A1 /* SPMacro.h */,
 			);
 			path = SPMacro;
 			sourceTree = "<group>";

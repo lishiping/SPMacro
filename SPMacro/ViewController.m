@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "SPUIKitMacro.h"
+#import "SPMacro.h"
 
 @interface ViewController ()
 
