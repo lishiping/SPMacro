@@ -294,18 +294,6 @@
 
 #endif
 
-//--------------------ios版本---------------------------
-
-
-//#define _iOSVerBigger(x)        (NSFoundationVersionNumber >= (x) - 0.0001)//FLT_EPSILON)
-//
-//#define IOS5_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_5_0)
-//#define IOS6_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_6_0)
-//#define IOS7_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_7_0)
-//#define IOS8_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_8_0)
-//#define IOS9_OR_LATER           _iOSVerBigger(NSFoundationVersionNumber_iOS_9_0)
-
-
 
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
@@ -318,7 +306,7 @@
 
 
 //runtime换类方法
-#define SP_ExchangeImplementations_Class_Method(_cls_, _sel_1, _sel_2) {\
+#define SP_EXCHANGE_IMP_CLASS_METHOD(_cls_, _sel_1, _sel_2) {\
 Method method1 = class_getClassMethod(_cls_, _sel_1);\
 Method method2 = class_getClassMethod(_cls_, _sel_2);\
 SP_ASSERT(method1 != NULL);\
@@ -330,7 +318,7 @@ method_exchangeImplementations(method1, method2);\
 }
 
 //runtime换实例方法
-#define SP_ExchangeImplementations_Class_Instance(_cls_, _sel_1, _sel_2) {\
+#define SP_EXCHANGE_IMP_CLASS_INSTANCE(_cls_, _sel_1, _sel_2) {\
 Method method1 = class_getInstanceMethod(_cls_, _sel_1);\
 Method method2 = class_getInstanceMethod(_cls_, _sel_2);\
 SP_ASSERT(method1 != NULL);\
@@ -350,7 +338,6 @@ method_exchangeImplementations(method1, method2);\
 +(void)printFatherClass:(id)obj;    // 打印super class
 
 +(void)ios_dialPhone:(NSString *)phoneNumber needAlert:(BOOL)isNeedAlert;
-
 
 /**
  计算代码块的执行时间的方法,用来验证算法的执行效率等其他需要测试执行时间的代码

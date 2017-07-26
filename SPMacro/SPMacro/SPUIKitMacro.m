@@ -148,7 +148,6 @@ void doPrintViewAndSubviews(UIView *view, int level)
     return (ret);
 }
 
-
 + (UIImage *)compressImage:(UIImage *)image toSize:(CGSize)size
 {
     size.width = MAX(10, size.width);
@@ -164,57 +163,6 @@ void doPrintViewAndSubviews(UIView *view, int level)
     UIImage *compressImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return (compressImage);
-}
-
-
-//- (NSString *)saveToCacheDisk;
-//{
-//    NSString *timestamp = [NSString stringWithFormat:@"%llu", (UInt64)([[NSDate date] timeIntervalSince1970] * 1000)];
-//    //    NSString *fileName = [kPath_Cache stringByAppendingPathComponent:timestamp];
-//    //    ASSERT(![[NSFileManager defaultManager] fileExistsAtPath:fileName]);
-//    //    [self saveToFile:fileName withJPEG:.8 orPNG:NO];
-//    return (timestamp);
-//}
-
-
-+ (BOOL)saveImageToFileWith:(UIImage*)image path:(NSString *)filePath withJPEG:(float)compressionQuality orPNG:(BOOL)canPNG;
-{
-    BOOL ret = NO;
-    if (filePath.length > 0) {
-        NSData *data = UIImageJPEGRepresentation(image, compressionQuality);
-        if (!data && canPNG) {
-            data = UIImagePNGRepresentation(image);
-        }
-        if (data.length) {
-          ret = [data writeToFile:filePath atomically:YES];
-        }
-    }
-    return ret;
-}
-
-
-+ (BOOL)saveImageToDocumentWith:(UIImage*)image name:(NSString *)name
-{
-    if (!(name.length>0)) {
-        return NO;
-    }
-    NSString *filepath = SP_PATH_DOCUMENT;
-    [filepath stringByAppendingString:name];
-    
-    BOOL ret = [[self class] saveImageToFileWith:image path:filepath withJPEG:1 orPNG:YES];
-    return ret;
-}
-
-+ (BOOL)savePNGImageToDocumentWith:(UIImage*)image name:(NSString *)name
-{
-    if (!(name.length>0)) {
-        return NO;
-    }
-    NSString *filepath = SP_PATH_DOCUMENT;
-    [filepath stringByAppendingString:name];
-    
-    BOOL ret = [[self class] saveImageToFileWith:image path:filepath withJPEG:0 orPNG:YES];
-    return ret;
 }
 
 

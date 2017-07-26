@@ -142,13 +142,13 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 #define SP_SHOW_ALERT(message)   _ShowAlertView(0, nil, (message), nil, @"确定", nil)
 
 #define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
-                                                    message: msg\
-                                                   delegate: _delegate_\
-                                          cancelButtonTitle: cancelTitle\
-                                          otherButtonTitles: __VA_ARGS__];\
-    alert.tag = _tag_;\
-    [alert show];\
+UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
+message: msg\
+delegate: _delegate_\
+cancelButtonTitle: cancelTitle\
+otherButtonTitles: __VA_ARGS__];\
+alert.tag = _tag_;\
+[alert show];\
 }
 
 
@@ -170,35 +170,34 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 #define SP_IOS10_OR_LATER SP_IOS_VERSION_OR_lALTER(10)
 
 
-
 //--------------------打印---------------------------
 
 //遍历子视图打印指针地址
 #define SP_PRINT_AllVIEW(view)        [SPUIKitMacro printAllViews:view]
 
+//-----------------------------------------------
+
 @interface SPUIKitMacro : NSObject
 
 /**
  获取系统版本，不准确，如系统版本9.2.1，则返回9.199998
-
+ 
  @return 系统版本
  */
 +(float)getSystemVersion;
 
-
 /**
  16进制#开头的字符串颜色转为颜色对象
-
+ 
  @param color 16进制字符串
-
+ 
  @return 颜色对象
  */
 + (UIColor *)colorWithHexString:(NSString *)color;
 
-
 /**
  打印当前视图名称和指针地址以及子视图的遍历打印
-
+ 
  @param view 当前视图
  */
 +(void)printAllViews:(UIView *)view;
@@ -206,17 +205,14 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 
 + (UIImage*)createImageWithColor:(UIColor *)color;
 
-
-
 /**
  视图转为图片
-
+ 
  @param view 视图对象
-
+ 
  @return 图片对象
  */
 + (UIImage *)captureWithView:(UIView *)view;
-
 
 /**
  *  获取指定大小的图片，保存原图片比例
@@ -226,42 +222,6 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
  *  @return 符合要求的图片
  */
 + (UIImage *)compressImage:(UIImage*)image toSize:(CGSize)size;
-
-
-
-/**
- 图片写入指定目录，默认写入jpg格式，如果图片质量为0，则开始是否允许转为png格式
-
- @param image              图片
- @param filePath           目录
- @param compressionQuality 图片质量
- @param canPNG             是否允许转为png
-
- @return 是否写入成功
- */
-+ (BOOL)saveImageToFileWith:(UIImage*)image path:(NSString *)filePath withJPEG:(float)compressionQuality orPNG:(BOOL)canPNG;
-
-/**
- 将图片写入沙盒，
-
- @param image              图片
- @param name               图片名字
-
- @return 是否写入成功
- */
-+ (BOOL)saveImageToDocumentWith:(UIImage*)image name:(NSString *)name;
-
-
-/**
- 图片转为png写入沙盒
-
- @param image 图片
- @param name  图片名字
-
- @return 是否成功写入
- */
-+ (BOOL)savePNGImageToDocumentWith:(UIImage*)image name:(NSString *)name;
-
 
 @end
 
