@@ -84,6 +84,12 @@
 #define SP_FONT_B(size)      [UIFont boldSystemFontOfSize:(size)]
 #define SP_FONT_NAME_SIZE(name,size) [UIFont fontWithName:(name) size:(size)]
 
+//细体字
+#define SP_FONT_SIZE_LIGHT(size) [UIFont systemFontOfSize:fontSize weight:UIFontWeightUltraLight];
+//常规字
+#define SP_FONT_SIZE_REGULAR(size) [UIFont systemFontOfSize:fontSize weight:UIFontWeightRegular];
+//粗体字
+#define SP_FONT_SIZE_BOLD(size) [UIFont systemFontOfSize:fontSize weight:UIFontWeightMedium];
 
 //-------------------Color---------------------------
 //--------------------颜色---------------------------
