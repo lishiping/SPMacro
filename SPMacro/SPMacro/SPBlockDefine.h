@@ -12,6 +12,8 @@
 //github address//https://github.com/lishiping/SPMacro
 //github address//https://github.com/lishiping/SafeData
 //github address//https://github.com/lishiping/SPCategory
+//github address//https://github.com/lishiping/SPBaseClass
+
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -26,7 +28,7 @@ typedef void (^SPIntegerBlock)(NSInteger integer);
 typedef void (^SPCGFloatBlock)(CGFloat cgfloat);
 typedef void (^SPIdBlock)(id object);
 typedef void (^SPBOOLBlock)(BOOL succeeded);
-typedef void (^SPArrayBlock)(NSArray* objects);
+typedef void (^SPArrayBlock)(NSArray* array);
 typedef void (^SPDataBlock)(NSData* data);
 typedef void (^SPImageBlock)(UIImage* image);
 typedef void (^SPStringBlock)(NSString* string);
@@ -37,7 +39,8 @@ typedef void (^SPIdErrorBlock)(id object, NSError *error);
 typedef void (^SPBOOLErrorBlock)(BOOL succeeded, NSError *error);
 typedef void (^SPIntegerErrorBlock)(NSInteger number, NSError *error);
 typedef void (^SPFloatErrorBlock)(float floatVar, NSError *error);
-typedef void (^SPArrayErrorBlock)(NSArray* objects, NSError *error);
+typedef void (^SPDoubleErrorBlock)(double doubleVar, NSError *error);
+typedef void (^SPArrayErrorBlock)(NSArray* array, NSError *error);
 typedef void (^SPDataErrorBlock)(NSData* data, NSError *error);
 typedef void (^SPImageErrorBlock)(UIImage* image, NSError *error);
 typedef void (^SPStringErrorBlock)(NSString* string, NSError *error);

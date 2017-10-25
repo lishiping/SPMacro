@@ -14,6 +14,7 @@
 //github address//https://github.com/lishiping/SPMacro
 //github address//https://github.com/lishiping/SafeData
 //github address//https://github.com/lishiping/SPCategory
+//github address//https://github.com/lishiping/SPBaseClass
 
 
 #import "SPUIKitMacro.h"
@@ -72,10 +73,14 @@ void doPrintViewAndSubviews(UIView *view, int level)
         return [UIColor clearColor];
     }
     // 判断前缀
-    if ([cString hasPrefix:@"0X"])
+    if ([cString hasPrefix:@"0X"] || [cString hasPrefix:@"0x"])
+    {
         cString = [cString substringFromIndex:2];
-    if ([cString hasPrefix:@"#"])
+    }
+    else if ([cString hasPrefix:@"#"])
+    {
         cString = [cString substringFromIndex:1];
+    }
     if ([cString length] != 6)
         return [UIColor clearColor];
     // 从六位数值中找到RGB对应的位数并转换
