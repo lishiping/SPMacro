@@ -17,10 +17,8 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
-#import <mach/mach_time.h>
-//#import <execinfo.h>
+
 
 //------------------weak strong reference----------------
 //--------------------弱强引用---------------------------
@@ -85,9 +83,13 @@
 #if DEBUG
 
 
-#define SP_ASSERT(obj)               assert((obj))
+//当condition的值为非真值的时候，断言停留在此，并打印备注消息
+//NSAssert(0, @"备注消息");
+#define SP_NSAssert(condition, desc)   NSAssert(condition,desc);
 
-#define SP_ASSERT_CLASS(obj, cls)  SP_ASSERT((x) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+#define SP_ASSERT(obj)               assert(obj)
+
+#define SP_ASSERT_CLASS(obj, cls)  assert((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
 
 // (assert main thread)断言在主线程中
 #define SP_ASSERT_MAIN_THREAD             SP_ASSERT(SP_IS_MAIN_THREAD)
@@ -95,6 +97,8 @@
 
 #else
 
+
+#define SP_NSAssert(condition, desc)
 
 #define SP_ASSERT(obj)
 
@@ -127,29 +131,29 @@
 #define SP_IS_KIND_OF(obj, cls)                [(obj) isKindOfClass:[cls class]]
 
 // 判断实例类型(不含父类)
-#define SP_IS_MEMBER_OF(x, cls)              [(x) isMemberOfClass:[cls class]]
+#define SP_IS_MEMBER_OF(obj, cls)              [(obj) isMemberOfClass:[cls class]]
 
 // 判断实例类型(是否是子类)
-#define SP_IS_SUBCLASS_OF(x, cls)              [(x) isSubclassOfClass:[cls class]]
+#define SP_IS_SUBCLASS_OF(obj, cls)            [(obj) isSubclassOfClass:[cls class]]
 
 
 //--------------------Notification---------------------------
 //--------------------通知---------------------------
 
-#define __SP  [NSNotificationCenter defaultCenter]
+#define SP_NOTIFICATION_DEFAULT  [NSNotificationCenter defaultCenter]
 
 // 添加观察者
-#define SP_ADD_OBSERVER(__obj, __sel, __name, __message)      [__SP addObserver:__obj selector:__sel name:__name object:__message]
+#define SP_ADD_OBSERVER(__obj, __sel, __name, __message)      [SP_NOTIFICATION_DEFAULT addObserver:__obj selector:__sel name:__name object:__message]
 
 // 发送消息（同步）
-#define SP_POST_NOTI(__name, __message)                 [__SP postNotificationName:__name object:__message]
+#define SP_POST_NOTI(__name, __message)                 [SP_NOTIFICATION_DEFAULT postNotificationName:__name object:__message]
 
 // 取消观察
-#define SP_REMOVE_SELF                     [__SP removeObserver:self]
+#define SP_REMOVE_SELF                     [SP_NOTIFICATION_DEFAULT removeObserver:self]
 
-#define SP_REMOVE(__obj)                    [__SP removeObserver:__obj]
+#define SP_REMOVE(__obj)                    [SP_NOTIFICATION_DEFAULT removeObserver:__obj]
 
-#define SP_REMOVE_NAME(__obj, __name, __message)      [__SP removeObserver:__obj name:__name object:__message]
+#define SP_REMOVE_NAME(__obj, __name, __message)      [SP_NOTIFICATION_DEFAULT removeObserver:__obj name:__name object:__message]
 
 
 //--------------------APP Version----------------------
@@ -179,22 +183,6 @@
 
 // (safe run block)安全运行block
 #define SP_BLOCK(block, ...)     if (block) {block(__VA_ARGS__);}
-
-
-
-//--------------------dial phone------------------------
-//--------------------拨打电话---------------------------
-
-
-/**
- Call the system call
- 调用系统拨打电话
- 
- @param phoneNumber 电话号码
- @param isNeedAlert 是否弹出alert询问
- 
- */
-#define SP_DIAL_PHONE(phoneNumber,isNeedAlert) [SPFoundationMacro ios_dialPhone:phoneNumber needAlert:isNeedAlert]
 
 
 
@@ -337,15 +325,13 @@ method_exchangeImplementations(method1, method2);\
 
 +(void)printFatherClass:(id)obj;    // 打印super class
 
-+(void)ios_dialPhone:(NSString *)phoneNumber needAlert:(BOOL)isNeedAlert;
-
 /**
  计算代码块的执行时间的方法,用来验证算法的执行效率等其他需要测试执行时间的代码
  
  @param block 代码块
  @return (return ms time)返回毫秒运算时间
  */
-+(CGFloat)calculateRunTimeBlock:(void (^)(void))block;
++(double)calculateRunTimeBlock:(void (^)(void))block;
 
 
 @end

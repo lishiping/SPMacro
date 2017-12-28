@@ -17,6 +17,8 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import "SPFoundationMacro.h"
+#import <mach/mach_time.h>
+//#import <execinfo.h>
 
 
 @interface SPFoundationMacro()
@@ -58,16 +60,6 @@
 }
 
 
-+(void)ios_dialPhone:(NSString *)phoneNumber needAlert:(BOOL)isNeedAlert
-{
-    if (phoneNumber.length > 0)
-    {
-        NSString *tel = [NSString stringWithFormat:(isNeedAlert ? @"telprompt://%@" : @"tel://%@"), phoneNumber];
-        
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tel]];
-    }
-}
-
 /**
  计算代码执行时间的方法（相比其他方法要好一些）
  
@@ -75,7 +67,7 @@
  
  @return 返回毫秒时间
  */
-+(CGFloat)calculateRunTimeBlock:(void (^)(void))block
++(double)calculateRunTimeBlock:(void (^)(void))block
 {
     mach_timebase_info_data_t info;
     if (mach_timebase_info(&info) != KERN_SUCCESS) return 0.0;
@@ -87,7 +79,7 @@
     
     uint64_t nanos = elapsed * info.numer / info.denom;//得到纳秒
 
-    CGFloat nanoTime =(CGFloat)nanos / NSEC_PER_MSEC;
+    double nanoTime =(double)nanos / NSEC_PER_MSEC;
     
     SP_LOG(@"%@=%.2fms",SP_LANGUAGE_IS_EN()?@"CODE EXECUTE_TIME":@"代码执行时间",nanoTime);
     

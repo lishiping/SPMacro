@@ -17,14 +17,12 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import <UIKit/UIKit.h>
-#import <UIKit/UIDevice.h>
-#import "SPFoundationMacro.h"
 
 
 //----------------------screen size-------------------------
 //----------------------屏幕尺寸-------------------------
 
-#define SP_SCREEN_BOUND        ([UIScreen mainScreen].bounds)
+#define SP_SCREEN_BOUND         ([UIScreen mainScreen].bounds)
 
 #define SP_SCREEN_WIDTH         ([UIScreen mainScreen].bounds.size.width)
 
@@ -34,7 +32,7 @@
 
 #define SP_STATUSBAR_HEIGHT     ([[UIApplication sharedApplication] statusBarFrame].size.height)
 
-#define SP_NAVIBAR_HEIGHT (self.navigationController.navigationBar.frame.size.height)
+#define SP_NAVIBAR_HEIGHT       (self.navigationController.navigationBar.frame.size.height)
 
 
 
@@ -65,11 +63,14 @@
 //iphone5的屏幕
 #define SP_IS_IPHONE5_5S ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 568), [UIScreen mainScreen].bounds.size) : NO)
 
-//iphone6和iPhone7的屏幕
+//iphone6，iPhone7，iPhone8的屏幕
 #define SP_IS_IPHONE6_6S_7 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 667), [UIScreen mainScreen].bounds.size): NO)
 
-//iphone6P和iPhone7P的屏幕
+//iphone6P，iPhone7P，iPhone8P的屏幕
 #define SP_IS_IPHONE6P_6SP_7P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
+
+//iphoneX的屏幕
+#define SP_IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
 
 //iPad Air,iPad Air2,iPad Pro9.7inch,iPad Retina的屏幕
 #define SP_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
@@ -128,7 +129,6 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 #define SP_IMAGE_VIEW(name)      [[UIImageView alloc] initWithImage:SP_IMAGE(name)]
 
 #define SP_IMAGE_FILE(file)        [UIImage imageWithContentsOfFile:file]
-#define SP_IMAGE_CG(x)        [UIImage imageWithCGImage:(x)]
 #define SP_IMAGE_DATA(data)      [UIImage imageWithData:(data)]
 
 //view to image
@@ -145,7 +145,7 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //--------------------AlertView---------------------------
 //--------------------警告框---------------------------
 
-#define SP_SHOW_ALERT(message)   _ShowAlertView(0, nil, (message), nil, @"确定", nil)
+#define SP_SHOW_ALERT(message)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, @"确定", nil)
 
 #define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
@@ -162,18 +162,32 @@ alert.tag = _tag_;\
 //--------------------ios Version---------------------
 //--------------------ios版本---------------------------
 
-#define SP_IOS_VERSION  [SPUIKitMacro getSystemVersion]
+//判断是否等于某版本
+//SP_iOS_SYSTEM_VERSION_EQUAL_TO(@"8.0")
+#define SP_iOS_SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 
-//该方法不准确，只对于整数版本准确，如果输入9.2判断不对因为实际版本9.2.1转为float值为9.199998，小于9.2，所以不能输入小数
-#define SP_IOS_VERSION_OR_lALTER(v)  {[SPUIKitMacro getSystemVersion]>=v?YES:NO}
+//判断是否大于某版本
+#define SP_iOS_SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+
+//判断是否大于等于某版本
+#define SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+//判断是否小于某版本
+#define SP_iOS_SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+
+//判断是否小于等于某版本
+#define SP_iOS_SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
+//获取系统版本字符串
+#define SP_iOS_VERSION_STRING  [[UIDevice currentDevice] systemVersion]
 
 //以下判断准确可用
-#define SP_IOS5_OR_LATER SP_IOS_VERSION_OR_lALTER(5)
-#define SP_IOS6_OR_LATER SP_IOS_VERSION_OR_lALTER(6)
-#define SP_IOS7_OR_LATER SP_IOS_VERSION_OR_lALTER(7)
-#define SP_IOS8_OR_LATER SP_IOS_VERSION_OR_lALTER(8)
-#define SP_IOS9_OR_LATER SP_IOS_VERSION_OR_lALTER(9)
-#define SP_IOS10_OR_LATER SP_IOS_VERSION_OR_lALTER(10)
+#define SP_IOS6_OR_LATER  SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0")
+#define SP_IOS7_OR_LATER  SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")
+#define SP_IOS8_OR_LATER  SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")
+#define SP_IOS9_OR_LATER  SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")
+#define SP_IOS10_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")
+#define SP_IOS11_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")
 
 
 //--------------------打印---------------------------
@@ -184,13 +198,6 @@ alert.tag = _tag_;\
 //-----------------------------------------------
 
 @interface SPUIKitMacro : NSObject
-
-/**
- 获取系统版本，不准确，如系统版本9.2.1，则返回9.199998
- 
- @return 系统版本
- */
-+(float)getSystemVersion;
 
 /**
  16进制#开头的字符串颜色转为颜色对象

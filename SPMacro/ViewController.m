@@ -19,6 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     CGFloat h = SP_SCREEN_HEIGHT;
     CGFloat w = SP_SCREEN_WIDTH;
     SP_LOG(@"屏幕宽度==%f和高度==%f",w,h);
@@ -28,6 +30,8 @@
 //    });
 //    
 //    SP_LOG(@"代码执行时间%f",time);
+//    NSAssert(1, nil);
+//    assert(3);
 }
 
 

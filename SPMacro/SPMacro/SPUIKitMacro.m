@@ -44,25 +44,6 @@ void doPrintViewAndSubviews(UIView *view, int level)
 
 @implementation SPUIKitMacro
 
-+(float)getSystemVersion
-{
-    NSArray *ar = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    
-    NSMutableString *str = [[NSMutableString alloc] init];
-    if (ar.count>=2) {
-        [str appendString:[ar objectAtIndex:0]];
-        [str appendString:@"."];
-        [str appendString:[ar objectAtIndex:1]];
-    }
-    else
-    {
-        [str appendString:[UIDevice currentDevice].systemVersion];
-    }
-    
-    float version = [str floatValue];
-    
-    return version;
-}
 
 + (UIColor *)colorWithHexString:(NSString *)color
 {
@@ -124,7 +105,7 @@ void doPrintViewAndSubviews(UIView *view, int level)
 + (UIImage *)captureWithView:(UIView *)view;
 {
     UIImage *ret = nil;
-    if (SP_IS_KIND_OF(view, UIScrollView))
+    if ([view isKindOfClass:[UIView class]])
     {
         UIScrollView *scrollView = (UIScrollView *)view;
         UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, scrollView.opaque, 0.0);
