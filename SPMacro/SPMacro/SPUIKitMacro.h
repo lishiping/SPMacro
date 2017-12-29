@@ -57,26 +57,26 @@
 //---------------Judging device screen---------------------
 //--------------------判断设备屏幕---------------------------
 
-//iphone4的屏幕
-#define SP_IS_IPHONE4_4S ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 480), [UIScreen mainScreen].bounds.size) : NO)
+//iphone4,iphone4S的屏幕
+#define SP_SCREEN_IS_IPHONE4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 480), [UIScreen mainScreen].bounds.size) : NO)
 
-//iphone5的屏幕
-#define SP_IS_IPHONE5_5S ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 568), [UIScreen mainScreen].bounds.size) : NO)
+//iphone5,iphone5S,iphone5C的屏幕
+#define SP_SCREEN_IS_IPHONE5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 568), [UIScreen mainScreen].bounds.size) : NO)
 
 //iphone6，iPhone7，iPhone8的屏幕
-#define SP_IS_IPHONE6_6S_7 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 667), [UIScreen mainScreen].bounds.size): NO)
+#define SP_SCREEN_IS_IPHONE6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 667), [UIScreen mainScreen].bounds.size): NO)
 
 //iphone6P，iPhone7P，iPhone8P的屏幕
-#define SP_IS_IPHONE6P_6SP_7P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE6P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
 
 //iphoneX的屏幕
-#define SP_IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
 
 //iPad Air,iPad Air2,iPad Pro9.7inch,iPad Retina的屏幕
-#define SP_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
 
 //iPad Pro12.9inch的屏幕
-#define SP_IS_IPAD_PRO12 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1024, 1366), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPAD_PRO12 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1024, 1366), [UIScreen mainScreen].bounds.size) : NO)
 
 //--------------------Font---------------------------
 //--------------------字体---------------------------
@@ -159,8 +159,8 @@ alert.tag = _tag_;\
 
 
 
-//--------------------ios Version---------------------
-//--------------------ios版本---------------------------
+//--------------------iOS Version---------------------
+//--------------------iOS 版本---------------------------
 
 //判断是否等于某版本
 //SP_iOS_SYSTEM_VERSION_EQUAL_TO(@"8.0")

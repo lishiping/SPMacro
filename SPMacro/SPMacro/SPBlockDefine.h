@@ -20,6 +20,7 @@
 //A single param（一个参数）
 typedef void (^SPIntBlock)(int intVar);
 typedef void (^SPLongBlock)(long longVar);
+typedef void (^SPLongLongBlock)(long long longlongVar);
 typedef void (^SPFloatBlock)(float floatVar);
 typedef void (^SPDoubleBlock)(double doubleVar);
 typedef void (^SPVoidBlock)(void);
@@ -38,6 +39,8 @@ typedef void (^SPDictionaryBlock)(NSDictionary* dict);
 typedef void (^SPIdErrorBlock)(id object, NSError *error);
 typedef void (^SPBOOLErrorBlock)(BOOL succeeded, NSError *error);
 typedef void (^SPIntegerErrorBlock)(NSInteger number, NSError *error);
+typedef void (^SPLongErrorBlock)(long longVar, NSError *error);
+typedef void (^SPLongLongErrorBlock)(long long longlongVar, NSError *error);
 typedef void (^SPFloatErrorBlock)(float floatVar, NSError *error);
 typedef void (^SPDoubleErrorBlock)(double doubleVar, NSError *error);
 typedef void (^SPArrayErrorBlock)(NSArray* array, NSError *error);
