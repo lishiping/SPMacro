@@ -32,6 +32,12 @@
 //    SP_LOG(@"代码执行时间%f",time);
 //    NSAssert(1, nil);
 //    assert(3);
+    
+    SP_RUN_MAIN_THREAD
+    (self.view.backgroundColor = [UIColor blueColor];
+     NSLog(@"打印当前线程%@",[NSThread currentThread]);
+     )
+    
 }
 
 

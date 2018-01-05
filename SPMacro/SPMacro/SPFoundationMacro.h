@@ -175,11 +175,19 @@
 // (is main thread)判断是否主线程
 #define SP_IS_MAIN_THREAD                [NSThread isMainThread]
 
-// (run in main thread)使block在主线程中运行
-#define SP_RUN_MAIN_THREAD(block)    if (SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_main_queue(), ^{(block);});}
+// (run in main thread)使block在主线程中运行，例如下面的用法
+//SP_RUN_MAIN_THREAD
+//(self.view.backgroundColor = [UIColor blueColor];
+// NSLog(@"打印当前线程%@",[NSThread currentThread]);
+// )
+#define SP_RUN_MAIN_THREAD(block)    if (SP_IS_MAIN_THREAD) {block} else {dispatch_async(dispatch_get_main_queue(), ^{block});}
 
-// (run in global thread)使block在子线程中运行
-#define SP_RUN_GlOBAL_THREAD(block)    if (!SP_IS_MAIN_THREAD) {(block);} else {dispatch_async(dispatch_get_global_queue(0,0), ^{(block);});}
+// (run in global thread)使block在子线程中运行，例如下面的用法
+//SP_RUN_GlOBAL_THREAD
+//(NSLog(@"打印当前线程2%@",[NSThread currentThread]);
+// )
+#define SP_RUN_GlOBAL_THREAD(block)    if (!SP_IS_MAIN_THREAD) {block} else {dispatch_async(dispatch_get_global_queue(0,0), ^{block});}
+
 
 // (safe run block)安全运行block
 #define SP_BLOCK(block, ...)     if (block) {block(__VA_ARGS__);}
