@@ -17,7 +17,6 @@
 //github address//https://github.com/lishiping/SPBaseClass
 
 #import <Foundation/Foundation.h>
-#import <objc/runtime.h>
 
 
 //------------------weak strong reference----------------
@@ -121,7 +120,7 @@
  
  SP_LOG(@"代码执行时间%fms",time);
  */
-#define SP_EXECUTE_TIME(block) [SPFoundationMacro calculateRunTimeBlock:^{(block);}];
+#define SP_EXECUTE_TIME(block) [SPFoundationMacro calculateRunTimeBlock:^{block}];
 
 
 //------------------Kind Of Class---------------------
@@ -296,34 +295,6 @@
 
 //判断本地语言是不是英语
 #define SP_LANGUAGE_IS_EN()         [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"en"]
-
-
-//--------------------runtime---------------------------
-
-
-//runtime换类方法
-#define SP_EXCHANGE_IMP_CLASS_METHOD(_cls_, _sel_1, _sel_2) {\
-Method method1 = class_getClassMethod(_cls_, _sel_1);\
-Method method2 = class_getClassMethod(_cls_, _sel_2);\
-SP_ASSERT(method1 != NULL);\
-SP_ASSERT(method2 != NULL);\
-SP_LOG(@"exchange [%@], +%@(0x%08lx) ==> +%@(0x%08lx), ", NSStringFromClass(_cls_), NSStringFromSelector(_sel_1), (long)method1, NSStringFromSelector(_sel_2), (long)method2);\
-if (method1 && method2) {\
-method_exchangeImplementations(method1, method2);\
-}\
-}
-
-//runtime换实例方法
-#define SP_EXCHANGE_IMP_CLASS_INSTANCE(_cls_, _sel_1, _sel_2) {\
-Method method1 = class_getInstanceMethod(_cls_, _sel_1);\
-Method method2 = class_getInstanceMethod(_cls_, _sel_2);\
-SP_ASSERT(method1 != NULL);\
-SP_ASSERT(method2 != NULL);\
-SP_LOG(@"exchange (%@), -%@(0x%08lx) ==> -%@(0x%08lx), ", NSStringFromClass(_cls_), NSStringFromSelector(_sel_1), (long)method1, NSStringFromSelector(_sel_2), (long)method2);\
-if (method1 && method2) {\
-method_exchangeImplementations(method1, method2);\
-}\
-}
 
 
 

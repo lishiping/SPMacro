@@ -18,6 +18,8 @@
 
 #import "SPFoundationMacro.h"
 #import <mach/mach_time.h>
+#import <objc/runtime.h>
+
 //#import <execinfo.h>
 
 
@@ -69,6 +71,8 @@
  */
 +(double)calculateRunTimeBlock:(void (^)(void))block
 {
+#if DEBUG
+    
     mach_timebase_info_data_t info;
     if (mach_timebase_info(&info) != KERN_SUCCESS) return 0.0;
     
@@ -84,6 +88,13 @@
     SP_LOG(@"%@=%.2fms",SP_LANGUAGE_IS_EN()?@"CODE EXECUTE_TIME":@"代码执行时间",nanoTime);
     
     return nanoTime; //计算结果是毫秒
+    
+#else
+    
+    return 0.0f;
+    
+#endif
+    
 }
 
 

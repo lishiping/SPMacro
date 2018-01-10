@@ -25,18 +25,26 @@
     CGFloat w = SP_SCREEN_WIDTH;
     SP_LOG(@"屏幕宽度==%f和高度==%f",w,h);
     
-//    CGFloat time =  SP_EXECUTE_TIME({
-//        sleep(2);
-//    });
-//    
-//    SP_LOG(@"代码执行时间%f",time);
-//    NSAssert(1, nil);
-//    assert(3);
+    //    CGFloat time =  SP_EXECUTE_TIME({
+    //        sleep(2);
+    //    });
+    //
+    //    SP_LOG(@"代码执行时间%f",time);
+    //    NSAssert(1, nil);
+    //    assert(3);
     
     SP_RUN_MAIN_THREAD
     (self.view.backgroundColor = [UIColor blueColor];
      NSLog(@"打印当前线程%@",[NSThread currentThread]);
      )
+    
+    double  time =   SP_EXECUTE_TIME(
+                                     
+                                     sleep(2);
+                                     )
+    
+    SP_LOG(@"执行时间==%fms",time);
+    
     
 }
 
