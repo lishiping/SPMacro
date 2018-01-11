@@ -114,9 +114,9 @@
 //------------------代码运算时间(返回毫秒时间)------------------
 
 /*
- CGFloat time =  SP_EXECUTE_TIME({
+ CGFloat time =  SP_EXECUTE_TIME(
  sleep(2);
- });
+ );
  
  SP_LOG(@"代码执行时间%fms",time);
  */
