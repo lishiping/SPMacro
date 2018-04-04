@@ -293,9 +293,14 @@
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
-//判断本地语言是不是英语
-#define SP_LANGUAGE_IS_EN()         [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"en"]
+//判断是否是简体中文环境
+#define SP_LANGUAGE_IS_CHINESE  [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"zh-Hans-US"]
 
+//判断本地语言是不是英语
+#define SP_LANGUAGE_IS_EN()    [[[NSLocale preferredLanguages] objectAtIndex:0] containsString:@"en"]
+
+//多语言支持,使用系统多语言方法
+#define SP_LocalizedString(key)           NSLocalizedString(key, nil)     //官方多语言字符集
 
 
 @interface SPFoundationMacro : NSObject

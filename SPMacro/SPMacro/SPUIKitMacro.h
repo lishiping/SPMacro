@@ -30,9 +30,9 @@
 
 #define SP_SCREEN_SCALE         ([UIScreen mainScreen].scale)
 
-#define SP_STATUSBAR_HEIGHT     ([[UIApplication sharedApplication] statusBarFrame].size.height)
+#define SP_STATUSBAR_HEIGHT     ([[UIApplication sharedApplication] statusBarFrame].size.height)?:0
 
-#define SP_NAVIBAR_HEIGHT       (self.navigationController.navigationBar.frame.size.height)
+#define SP_NAVIBAR_HEIGHT       (self.navigationController.navigationBar.frame.size.height)?:0
 
 
 
@@ -42,14 +42,12 @@
 // Usually UI to design mark could not have a variety of screen when mark respectively, too much trouble, need only gives an annotation of the screen, then we selected by default if iPhone6 screen design, according to the proportion iPhone6 screen automatically adapt to the other screen
 
 // iphone4 iphone 5 iPhone7 are in accordance with the (w = 375) coded as a benchmark rate adaptive
-
 // 通常UI给设计图标注的时候不可能多种屏幕分别标注，太麻烦了，需要只给一种屏幕的标注就行，那么我们默认选中只要iPhone6屏幕的设计图标注，其他屏幕根据iPhone6屏幕比例自动适应
 
 // iphone4 iphone5 iPhone7 都按照(w=375)标注为基准比例自适应
 #define SP_ADJUST_WIDTH(width)              (floorf((width) * SP_SCREEN_WIDTH/ 375.0f))
 
 // iphone4 iphone 5 iPhone7 are in accordance with the (h=667) coded as a benchmark rate adaptive
-
 // iphone4 iphone5 iPhone7 都按照(h=667)标注为基准比例自适应
 #define SP_ADJUST_HEIGHT(height)            (floorf((height) * SP_SCREEN_HEIGHT/ 667.0f))
 
@@ -108,7 +106,7 @@ green   :(hexValue & 0xFF00)       / (float)0xFF00 \
 blue    :(hexValue & 0xFF)         / (float)0xFF \
 alpha   :1.0]
 
-//16进制数转为颜色对象
+//16进制数转为颜色对象带透明度
 //SP_COLOR_RGBA(0X1E1E1E);
 #define SP_COLOR_HEX_RGBA(hexValue) [UIColor colorWith\
 Red     :(hexValue & 0xFF000000)  / (float)0xFF000000 \
@@ -145,7 +143,7 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //--------------------AlertView---------------------------
 //--------------------警告框---------------------------
 
-#define SP_SHOW_ALERT(message)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, @"确定", nil)
+#define SP_SHOW_ALERT(message,cancelTitle)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, cancelTitle?:@"确定", nil)
 
 #define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
 UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
@@ -156,7 +154,6 @@ otherButtonTitles: __VA_ARGS__];\
 alert.tag = _tag_;\
 [alert show];\
 }
-
 
 
 //--------------------iOS Version---------------------
