@@ -41,22 +41,22 @@
 //--------------------Print log---------------------------
 //--------------------打印日志---------------------------
 
-#define SP_STRING_FORMAT(fmt, ...)      [NSString stringWithFormat:(@"%z, %s(line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__]
+#define SP_STRING_FORMAT(fmt, ...)  [NSString stringWithFormat:(@"%z, %s(line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__]
 
 
 
 #if DEBUG
 
-#define SP_LOG(...) NSLog(__VA_ARGS__);
+#define SP_LOG(...)                 NSLog(__VA_ARGS__);
 
-#define SP_LOG_FMT(fmt, ...) NSLog((@"%s (line %d) " fmt), __FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define SP_LOG_FMT(fmt, ...)        NSLog((@"%s (line %d) " fmt), __FUNCTION__, __LINE__, ##__VA_ARGS__);
 
-#define SP_LOG_IF(x, fmt, ...) if (x) {SP_LOG_FMT(fmt, ##__VA_ARGS__);}
+#define SP_LOG_IF(x, fmt, ...)      if (x) {SP_LOG_FMT(fmt, ##__VA_ARGS__);}
 
-#define SP_PRINTF(fmt, ...)  printf(("%ld, %s (line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define SP_PRINTF(fmt, ...)         printf(("%ld, %s (line %d) " fmt), clock(), __FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 // 打印super class
-#define SP_PRINT_FATHERCLASS(obj) [SPFoundationMacro printFatherClass:obj];
+#define SP_PRINT_FATHERCLASS(obj)   [SPFoundationMacro printFatherClass:obj];
 
 
 #else
@@ -84,14 +84,14 @@
 
 //当condition的值为非真值的时候，断言停留在此，并打印备注消息
 //NSAssert(0, @"备注消息");
-#define SP_NSAssert(condition, desc)   NSAssert(condition,desc);
+#define SP_NSAssert(condition, desc)  NSAssert(condition,desc);
 
-#define SP_ASSERT(obj)               assert(obj)
+#define SP_ASSERT(obj)                assert(obj)
 
-#define SP_ASSERT_CLASS(obj, cls)  assert((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
+#define SP_ASSERT_CLASS(obj, cls)     assert((obj) && SP_IS_KIND_OF(obj,cls))//断言实例有值和类型
 
 // (assert main thread)断言在主线程中
-#define SP_ASSERT_MAIN_THREAD             SP_ASSERT(SP_IS_MAIN_THREAD)
+#define SP_ASSERT_MAIN_THREAD         SP_ASSERT(SP_IS_MAIN_THREAD)
 
 
 #else
@@ -120,39 +120,39 @@
  
  SP_LOG(@"代码执行时间%fms",time);
  */
-#define SP_EXECUTE_TIME(block) [SPFoundationMacro calculateRunTimeBlock:^{block}];
+#define SP_EXECUTE_TIME(block)       [SPFoundationMacro calculateRunTimeBlock:^{block}];
 
 
 //------------------Kind Of Class---------------------
 //------------------类型判断---------------------------
 
 // 判断实例类型(含父类)
-#define SP_IS_KIND_OF(obj, cls)                [(obj) isKindOfClass:[cls class]]
+#define SP_IS_KIND_OF(obj, cls)      [(obj) isKindOfClass:[cls class]]
 
 // 判断实例类型(不含父类)
-#define SP_IS_MEMBER_OF(obj, cls)              [(obj) isMemberOfClass:[cls class]]
+#define SP_IS_MEMBER_OF(obj, cls)    [(obj) isMemberOfClass:[cls class]]
 
 // 判断实例类型(是否是子类)
-#define SP_IS_SUBCLASS_OF(obj, cls)            [(obj) isSubclassOfClass:[cls class]]
+#define SP_IS_SUBCLASS_OF(obj, cls)  [(obj) isSubclassOfClass:[cls class]]
 
 
 //--------------------Notification---------------------------
 //--------------------通知---------------------------
 
-#define SP_NOTIFICATION_DEFAULT  [NSNotificationCenter defaultCenter]
+#define SP_NOTI_DEFAULT                             [NSNotificationCenter defaultCenter]
 
 // 添加观察者
-#define SP_ADD_OBSERVER(__obj, __sel, __name, __message)      [SP_NOTIFICATION_DEFAULT addObserver:__obj selector:__sel name:__name object:__message]
+#define SP_NOTI_ADD_OBSERVER(obj,sel,name,message)  [SP_NOTI_DEFAULT addObserver:obj selector:sel name:name object:message];
 
-// 发送消息（同步）
-#define SP_POST_NOTI(__name, __message)                 [SP_NOTIFICATION_DEFAULT postNotificationName:__name object:__message]
+// 发送通知消息（同步）
+#define SP_NOTI_POST(name,message)                  [SP_NOTI_DEFAULT postNotificationName:name object:message];
 
 // 取消观察
-#define SP_REMOVE_SELF                     [SP_NOTIFICATION_DEFAULT removeObserver:self]
+#define SP_NOTI_REMOVE_SELF                         [SP_NOTI_DEFAULT removeObserver:self];
 
-#define SP_REMOVE(__obj)                    [SP_NOTIFICATION_DEFAULT removeObserver:__obj]
+#define SP_NOTI_REMOVE(obj)                         [SP_NOTI_DEFAULT removeObserver:obj];
 
-#define SP_REMOVE_NAME(__obj, __name, __message)      [SP_NOTIFICATION_DEFAULT removeObserver:__obj name:__name object:__message]
+#define SP_NOTI_REMOVE_NAME(obj,name,message)       [SP_NOTI_DEFAULT removeObserver:obj name:name object:message];
 
 
 //--------------------APP Version----------------------
@@ -160,7 +160,7 @@
 
 //获取APP版本
 #ifndef SP_APP_VERSION
-#define SP_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+#define SP_APP_VERSION       [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
 
 //获取APP的build版本
 #define SP_APP_BUILD_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]
@@ -172,7 +172,7 @@
 //--------------------线程---------------------------
 
 // (is main thread)判断是否主线程
-#define SP_IS_MAIN_THREAD                [NSThread isMainThread]
+#define SP_IS_MAIN_THREAD            [NSThread isMainThread]
 
 // (run in main thread)使block在主线程中运行，例如下面的用法
 //SP_RUN_MAIN_THREAD
@@ -185,11 +185,10 @@
 //SP_RUN_GlOBAL_THREAD
 //(NSLog(@"打印当前线程2%@",[NSThread currentThread]);
 // )
-#define SP_RUN_GlOBAL_THREAD(block)    if (!SP_IS_MAIN_THREAD) {block} else {dispatch_async(dispatch_get_global_queue(0,0), ^{block});}
-
+#define SP_RUN_GlOBAL_THREAD(block)  if (!SP_IS_MAIN_THREAD) {block} else {dispatch_async(dispatch_get_global_queue(0,0), ^{block});}
 
 // (safe run block)安全运行block
-#define SP_BLOCK(block, ...)     if (block) {block(__VA_ARGS__);}
+#define SP_BLOCK(block, ...)         if (block) {block(__VA_ARGS__);}
 
 
 
@@ -197,7 +196,7 @@
 //--------------------沙盒路径---------------------------
 
 //获取沙盒主目录路径
-#define SP_PATH_HOME NSHomeDirectory()
+#define SP_PATH_HOME         NSHomeDirectory()
 
 //沙盒文档路径
 /*Documents 目录：您应该将所有应用程序数据文件写入到这个目录下。这个目录用于存储用户数据或其它应该定期备份的信息。
@@ -223,7 +222,7 @@
  ②是否会被iTunes同步
  是
  */
-#define SP_PATH_PREFERENCE      [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Preference"]
+#define SP_PATH_PREFERENCE   [[NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:@"Preferences"]
 
 
 //沙盒Caches缓存路径
@@ -233,7 +232,7 @@
  ②是否会被iTunes同步
  否。
  */
-#define SP_PATH_CACHE      [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define SP_PATH_CACHE        [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 //沙盒tmp路径
 //tmp 目录：这个目录用于存放临时文件，保存应用程序再次启动过程中不需要的信息。该路径下的文件不会被iTunes备份。
@@ -242,33 +241,18 @@
  ②是否会被iTunes同步
  否
  */
-#define SP_PATH_TMP      NSTemporaryDirectory()
+#define SP_PATH_TMP          NSTemporaryDirectory()
 
 
 //--------------------file---------------------------
 //--------------------文件---------------------------
 
 //判断文件是否存在
-#define SP_IS_FILE_EXIST(path)             [[NSFileManager defaultManager] fileExistsAtPath:(path)]
+#define SP_IS_FILE_EXIST(path)  [[NSFileManager defaultManager] fileExistsAtPath:(path)]
 
 
 //--------------Reference counting----------------------
 //--------------------引用计数---------------------------
-
-
-#define MRC_Retain(x)           [(x) retain];
-#define MRC_Copy(x)             [(x) copy];
-#define MRC_Release(x)          {if(x){[(x) release];}}
-#define MRC_Release_View(x)     {if(x){[(x) removeFromSuperview];[(x) release];(x)=nil;}}
-#define MRC_Dealloc(x)          [(x) dealloc];
-
-
-#define ARC_Retain(x)           (x)
-#define ARC_Copy(x)             (x)
-#define ARC_Release(x)          {(x)=nil;}
-#define ARC_Release_View(x)     {if(x){[(x) removeFromSuperview];(x)=nil;}}
-#define ARC_Dealloc(x)
-
 
 //判断是不是支持arc模式
 #if __has_feature(objc_arc)
@@ -290,6 +274,18 @@
 #endif
 
 
+#define MRC_Retain(x)           [(x) retain];
+#define MRC_Copy(x)             [(x) copy];
+#define MRC_Release(x)          {if(x){[(x) release];}}
+#define MRC_Release_View(x)     {if(x){[(x) removeFromSuperview];[(x) release];(x)=nil;}}
+#define MRC_Dealloc(x)          [(x) dealloc];
+
+#define ARC_Retain(x)           (x)
+#define ARC_Copy(x)             (x)
+#define ARC_Release(x)          {(x)=nil;}
+#define ARC_Release_View(x)     {if(x){[(x) removeFromSuperview];(x)=nil;}}
+#define ARC_Dealloc(x)
+
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
@@ -297,10 +293,10 @@
 #define SP_LANGUAGE_IS_CHINESE  [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"zh-Hans-US"]
 
 //判断本地语言是不是英语
-#define SP_LANGUAGE_IS_EN()    [[[NSLocale preferredLanguages] objectAtIndex:0] containsString:@"en"]
+#define SP_LANGUAGE_IS_EN()     [[[NSLocale preferredLanguages] objectAtIndex:0] containsString:@"en"]
 
-//多语言支持,使用系统多语言方法
-#define SP_LocalizedString(key)           NSLocalizedString(key, nil)     //官方多语言字符集
+//多语言支持,使用系统多语言方法,省略第二个参数
+#define SP_LocalizedString(key) NSLocalizedString(key, nil)     //官方多语言字符集
 
 
 @interface SPFoundationMacro : NSObject
