@@ -38,13 +38,12 @@
      NSLog(@"打印当前线程%@",[NSThread currentThread]);
      )
     
-    double  time =   SP_EXECUTE_TIME(
-                                     
-                                     sleep(2);
-                                     )
-    
-    SP_LOG(@"执行时间==%fms",time);
-    
+//    double  time =   SP_EXECUTE_TIME(
+//
+//                                     sleep(2);
+//                                     )
+//
+//    SP_LOG(@"执行时间==%fms",time);
     
 }
 

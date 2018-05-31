@@ -25,15 +25,17 @@
 //判断是不是支持arc模式
 #if __has_feature(objc_arc)
 
-#define SP_WEAK_SELF          __weak __typeof(self) weakSelf = self;
-#define SP_WEAK(obj)          __weak __typeof(obj) weak##obj = obj;
-#define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
+#define SP_WEAK_SELF          __weak __typeof(self) weak_self = self;
+#define SP_WEAK(obj)          __weak __typeof(obj) weak_##obj = obj;
+#define SP_STRONG_SELF        __strong __typeof(weak_self) strong_self = weak_self;
+#define SP_STRONG(obj)        __strong __typeof(obj) strong_##obj = weak_##obj;
 
 #else
 
-#define SP_WEAK_SELF          __block __typeof(self) weakSelf = self;
-#define SP_WEAK(obj)          __block __typeof(obj) weak##obj = obj;
-#define SP_STRONG_SELF        __strong __typeof(weakSelf)strongSelf = weakSelf;
+#define SP_WEAK_SELF          __block __typeof(self) weak_self = self;
+#define SP_WEAK(obj)          __block __typeof(obj) weak_##obj = obj;
+#define SP_STRONG_SELF        __strong __typeof(weak_self) strong_self = weak_self;
+#define SP_STRONG(obj)        __strong __typeof(obj) strong_##obj = weak_##obj;
 
 #endif
 
@@ -289,11 +291,14 @@
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
-//判断是否是简体中文环境
-#define SP_LANGUAGE_IS_CHINESE  [[[NSLocale preferredLanguages] objectAtIndex:0] isEqualToString:@"zh-Hans-US"]
+//判断是否是简体中文环境,(判断前缀，后面可能有地区区分不同)
+#define SP_LANGUAGE_IS_HANS  [[[NSLocale preferredLanguages] objectAtIndex:0] hasPrefix:@"zh-Hans"]
 
-//判断本地语言是不是英语
-#define SP_LANGUAGE_IS_EN()     [[[NSLocale preferredLanguages] objectAtIndex:0] containsString:@"en"]
+//判断是否是繁体中文环境,(判断前缀，后面可能有地区区分不同)
+#define SP_LANGUAGE_IS_HANT  [[[NSLocale preferredLanguages] objectAtIndex:0] hasPrefix:@"zh-Hant"]
+
+//判断本地语言是不是英语,(判断前缀，后面可能有地区区分不同)
+#define SP_LANGUAGE_IS_EN()     [[[NSLocale preferredLanguages] objectAtIndex:0] hasPrefix:@"en"]
 
 //多语言支持,使用系统多语言方法,省略第二个参数
 #define SP_LocalizedString(key) NSLocalizedString(key, nil)     //官方多语言字符集
