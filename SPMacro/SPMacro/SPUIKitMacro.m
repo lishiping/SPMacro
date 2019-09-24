@@ -45,7 +45,7 @@ void doPrintViewAndSubviews(UIView *view, int level)
 @implementation SPUIKitMacro
 
 
-+ (UIColor *)colorWithHexString:(NSString *)color
++ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha
 {
     NSString *cString = [[color stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
     

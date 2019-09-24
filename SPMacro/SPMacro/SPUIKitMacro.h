@@ -30,12 +30,15 @@
 
 #define SP_SCREEN_SCALE      ([UIScreen mainScreen].scale)
 
-#define SP_STATUSBAR_HEIGHT  ([[UIApplication sharedApplication] statusBarFrame].size.height)?:0
+#define SP_STATUSBAR_HEIGHT  (SP_IS_FULLSCREEN ? 44.f : 20.f)
 
-#define SP_NAVIBAR_HEIGHT    (self.navigationController.navigationBar.frame.size.height)?:0
+#define SP_NAVIBAR_HEIGHT    44.f
 
-#define SP_TABBAR_HEIGHT     (self.tabBarController.tabBar.frame.size.height)?:0
+#define SP_NAVIBAR_STATUSBAR_HEIGHT   (SP_STATUSBAR_HEIGHT+44.f)
 
+#define SP_TABBAR_HEIGHT     (SP_IS_FULLSCREEN ? (49.f+34.f) : 49.f)
+
+#define SP_TABBAR_SAFE_BOTTOM_MARGIN   (SP_IS_FULLSCREEN ? 34.f : 0.f)
 
 //----------------Screen adaptation--------------------
 //--------------------屏幕适配---------------------------
@@ -73,7 +76,12 @@
 #define SP_SCREEN_IS_IPHONE6P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
 
 //iphoneX的屏幕
-#define SP_SCREEN_IS_IPHONE_X ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE_X_XS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
+
+#define SP_SCREEN_IS_IPHONE_XR_XSMAX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 896), [UIScreen mainScreen].bounds.size) : NO)
+
+//异性全面屏
+#define SP_IS_FULLSCREEN    (SP_SCREEN_IS_IPHONE_X_XS || SP_SCREEN_IS_IPHONE_XR_XSMAX)
 
 //iPad Air,iPad Air2,iPad Pro9.7inch,iPad Retina的屏幕
 #define SP_SCREEN_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
@@ -122,7 +130,8 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //Hexadecimal string color to the color object
 //16进制字符串颜色转为颜色对象
 //SP_COLOR_HEX(@"#1E1E1E");
-#define SP_COLOR_HEX_STR(hexstring) [SPUIKitMacro colorWithHexString:(hexstring)]
+#define SP_COLOR_HEX_STR(hexstring) [SPUIKitMacro colorWithHexString:hexstring alpha:1.0f]
+#define SP_COLOR_HEXA_STR(hexstring,alpha) [SPUIKitMacro colorWithHexString:hexstring alpha:alpha]
 
 
 //--------------------image---------------------------
@@ -208,7 +217,7 @@ alert.tag = _tag_;\
  
  @return 颜色对象
  */
-+ (UIColor *)colorWithHexString:(NSString *)color;
++ (UIColor *)colorWithHexString:(NSString *)color alpha:(CGFloat)alpha;
 
 /**
  打印当前视图名称和指针地址以及子视图的遍历打印
