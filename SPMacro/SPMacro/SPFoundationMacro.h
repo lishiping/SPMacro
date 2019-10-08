@@ -144,17 +144,17 @@
 #define SP_NOTI_DEFAULT                             [NSNotificationCenter defaultCenter]
 
 // 添加观察者
-#define SP_NOTI_ADD_OBSERVER(obj,sel,name,message)  [SP_NOTI_DEFAULT addObserver:obj selector:sel name:name object:message];
+#define SP_NOTI_ADD_OBSERVER(_obj,_sel,_name,_message)  [SP_NOTI_DEFAULT addObserver:_obj selector:_sel name:_name object:_message];
 
 // 发送通知消息（同步）
-#define SP_NOTI_POST(name,message)                  [SP_NOTI_DEFAULT postNotificationName:name object:message];
+#define SP_NOTI_POST(_name,_message)                  [SP_NOTI_DEFAULT postNotificationName:_name object:_message];
 
 // 取消观察
 #define SP_NOTI_REMOVE_SELF                         [SP_NOTI_DEFAULT removeObserver:self];
 
 #define SP_NOTI_REMOVE(obj)                         [SP_NOTI_DEFAULT removeObserver:obj];
 
-#define SP_NOTI_REMOVE_NAME(obj,name,message)       [SP_NOTI_DEFAULT removeObserver:obj name:name object:message];
+#define SP_NOTI_REMOVE_NAME(_obj,_name,_message)       [SP_NOTI_DEFAULT removeObserver:_obj name:_name object:_message];
 
 
 //--------------------APP Version----------------------
