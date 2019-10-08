@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "SPMacro"
-  s.version      = "0.3.4"
+  s.version      = "0.3.5"
   s.summary      = "The macro of Foundation and UIKit,print,type,notification,threads,screen adaptation,colors etc. Foundation,UIKit层宏定义，打印，类型，通知，线程等，屏幕适配，颜色等"
 
 
