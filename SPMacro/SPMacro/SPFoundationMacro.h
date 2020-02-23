@@ -130,6 +130,7 @@
 
 // 判断实例类型(含父类)
 #define SP_IS_KIND_OF(obj, cls)      [(obj) isKindOfClass:[cls class]]
+#define SP_IS_KIND_OF_ClASSNAME(obj, classname)      [(obj) isKindOfClass:[NSClassFromString(classname) class]]
 
 // 判断实例类型(不含父类)
 #define SP_IS_MEMBER_OF(obj, cls)    [(obj) isMemberOfClass:[cls class]]
