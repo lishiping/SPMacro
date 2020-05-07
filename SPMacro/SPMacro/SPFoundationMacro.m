@@ -29,7 +29,6 @@
 
 @implementation SPFoundationMacro
 
-
 //// 函数调用堆栈
 //+(void)printBacktrace
 //{
@@ -88,6 +87,13 @@
 }
 
 
++ (NSString *)sp_stringDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss.SSS"];
+    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+    return dateString;
+}
 @end
 
 

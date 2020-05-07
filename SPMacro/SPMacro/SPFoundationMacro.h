@@ -60,6 +60,14 @@
 // 打印super class
 #define SP_PRINT_FATHERCLASS(obj)   [SPFoundationMacro printFatherClass:obj];
 
+/*
+ 打印提供：
+ 时间,
+ 类名,
+ 行数,
+ 函数名
+ */
+#define SP_SUPER_LOG(...) printf("%s, %s, line:%d, %s, %s\n\n",[[SPFoundationMacro sp_stringDate] UTF8String], [[NSString stringWithFormat:@"%s", __FILE__].lastPathComponent UTF8String] ,__LINE__,__FUNCTION__, [[NSString stringWithFormat:__VA_ARGS__] UTF8String]);
 
 #else
 
@@ -73,6 +81,8 @@
 #define SP_PRINTF(fmt, ...)
 
 #define SP_PRINT_FATHERCLASS(obj)
+
+#define SP_SUPER_LOG(...)
 
 
 #endif
@@ -319,5 +329,8 @@
  */
 +(double)calculateRunTimeBlock:(void (^)(void))block;
 
+
+/// 当前时间精确到毫秒
++ (NSString *)sp_stringDate;
 
 @end

@@ -34,11 +34,13 @@
 
 #define SP_NAVIBAR_HEIGHT    44.f
 
-#define SP_NAVIBAR_STATUSBAR_HEIGHT   (SP_STATUSBAR_HEIGHT+44.f)
+#define SP_NAVIBAR_STATUSBAR_HEIGHT   (SP_STATUSBAR_HEIGHT+SP_NAVIBAR_HEIGHT)
 
-#define SP_TABBAR_HEIGHT     (SP_IS_FULLSCREEN ? (49.f+34.f) : 49.f)
+#define SP_TABBAR_HEIGHT_NORMAL    49.f
 
 #define SP_TABBAR_SAFE_BOTTOM_MARGIN   (SP_IS_FULLSCREEN ? 34.f : 0.f)
+
+#define SP_TABBAR_HEIGHT    (SP_TABBAR_HEIGHT_NORMAL+SP_TABBAR_SAFE_BOTTOM_MARGIN)
 
 //----------------Screen adaptation--------------------
 //--------------------屏幕适配---------------------------
@@ -62,6 +64,10 @@
 
 //---------------Judging device screen---------------------
 //--------------------判断设备屏幕---------------------------
+
+//判断是手机还是pad
+#define SP_IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define SP_IS_IPAD   (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
 //iphone4,iphone4S的屏幕
 #define SP_SCREEN_IS_IPHONE4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 480), [UIScreen mainScreen].bounds.size) : NO)

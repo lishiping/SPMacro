@@ -23,8 +23,9 @@
     
     CGFloat h = SP_SCREEN_HEIGHT;
     CGFloat w = SP_SCREEN_WIDTH;
-    SP_LOG(@"屏幕宽度==%f和高度==%f",w,h);
-    
+    SP_LOG_FMT(@"屏幕宽度==%f和高度==%f",w,h);
+    SP_SUPER_LOG(@"屏幕宽度==%f和高度==%f",w,h);
+
     //    CGFloat time =  SP_EXECUTE_TIME({
     //        sleep(2);
     //    });
