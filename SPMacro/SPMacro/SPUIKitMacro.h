@@ -163,17 +163,17 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //--------------------AlertView---------------------------
 //--------------------警告框---------------------------
 
-#define SP_SHOW_ALERT(message,cancelTitle)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, cancelTitle?:@"确定", nil)
-
-#define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
-UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
-message: msg\
-delegate: _delegate_\
-cancelButtonTitle: cancelTitle\
-otherButtonTitles: __VA_ARGS__];\
-alert.tag = _tag_;\
-[alert show];\
-}
+//#define SP_SHOW_ALERT(message,cancelTitle)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, cancelTitle?:@"确定", nil)
+//
+//#define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
+//UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
+//message: msg\
+//delegate: _delegate_\
+//cancelButtonTitle: cancelTitle\
+//otherButtonTitles: __VA_ARGS__];\
+//alert.tag = _tag_;\
+//[alert show];\
+//}
 
 
 //--------------------iOS Version---------------------
