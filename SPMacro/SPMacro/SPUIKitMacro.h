@@ -28,18 +28,21 @@
 
 #define SP_SCREEN_HEIGHT     ([UIScreen mainScreen].bounds.size.height)
 
+#define SP_SCREEN_SIZE       ([UIScreen mainScreen].bounds.size)
+
 #define SP_SCREEN_SCALE      ([UIScreen mainScreen].scale)
 
+//状态栏高度iPhonex是44，普通屏幕是20
 #define SP_STATUSBAR_HEIGHT  (SP_IS_FULLSCREEN ? 44.f : 20.f)
-
+//普通导航栏高度44
 #define SP_NAVIBAR_HEIGHT    44.f
-
+//安全的导航栏和状态栏高度
 #define SP_NAVIBAR_STATUSBAR_HEIGHT   (SP_STATUSBAR_HEIGHT+SP_NAVIBAR_HEIGHT)
-
+//普通选项卡高度
 #define SP_TABBAR_HEIGHT_NORMAL    49.f
-
+//安全外边距
 #define SP_TABBAR_SAFE_BOTTOM_MARGIN   (SP_IS_FULLSCREEN ? 34.f : 0.f)
-
+//普通选项卡高度
 #define SP_TABBAR_HEIGHT    (SP_TABBAR_HEIGHT_NORMAL+SP_TABBAR_SAFE_BOTTOM_MARGIN)
 
 //----------------Screen adaptation--------------------
@@ -70,30 +73,30 @@
 #define SP_IS_IPAD   (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
 //iphone4,iphone4S的屏幕
-#define SP_SCREEN_IS_IPHONE4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 480), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE4 (CGSizeEqualToSize(CGSizeMake(320, 480), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(480, 320), SP_SCREEN_SIZE))
 
 //iphone5,iphone5S,iphone5C的屏幕
-#define SP_SCREEN_IS_IPHONE5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(320, 568), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE5 (CGSizeEqualToSize(CGSizeMake(320, 568), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(568, 320), SP_SCREEN_SIZE))
 
 //iphone6，iPhone7，iPhone8的屏幕
-#define SP_SCREEN_IS_IPHONE6 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 667), [UIScreen mainScreen].bounds.size): NO)
+#define SP_SCREEN_IS_IPHONE6 (CGSizeEqualToSize(CGSizeMake(375, 667), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(667, 375), SP_SCREEN_SIZE))
 
 //iphone6P，iPhone7P，iPhone8P的屏幕
-#define SP_SCREEN_IS_IPHONE6P ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 736), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE6P (CGSizeEqualToSize(CGSizeMake(414, 736), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(736, 414), SP_SCREEN_SIZE))
 
 //iphoneX的屏幕
-#define SP_SCREEN_IS_IPHONE_X_XS ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(375, 812), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE_X_XS (CGSizeEqualToSize(CGSizeMake(375, 812), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(812, 375), SP_SCREEN_SIZE))
 
-#define SP_SCREEN_IS_IPHONE_XR_XSMAX ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(414, 896), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPHONE_XR_XSMAX (CGSizeEqualToSize(CGSizeMake(414, 896), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(896, 414), SP_SCREEN_SIZE))
 
 //异性全面屏
-#define SP_IS_FULLSCREEN    (SP_SCREEN_IS_IPHONE_X_XS || SP_SCREEN_IS_IPHONE_XR_XSMAX)
+#define SP_IS_FULLSCREEN  [SPUIKitMacro isIPhoneX]
 
 //iPad Air,iPad Air2,iPad Pro9.7inch,iPad Retina的屏幕
-#define SP_SCREEN_IS_IPAD_AIR_AIR2_PRO9_RETINA ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(768, 1024), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPAD_AIR_AIR2_PRO9_RETINA (CGSizeEqualToSize(CGSizeMake(768, 1024), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(1024, 768), SP_SCREEN_SIZE))
 
 //iPad Pro12.9inch的屏幕
-#define SP_SCREEN_IS_IPAD_PRO12 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1024, 1366), [UIScreen mainScreen].bounds.size) : NO)
+#define SP_SCREEN_IS_IPAD_PRO12 (CGSizeEqualToSize(CGSizeMake(1024, 1366), SP_SCREEN_SIZE) || CGSizeEqualToSize(CGSizeMake(1366, 1024), SP_SCREEN_SIZE))
 
 //--------------------Font---------------------------
 //--------------------字体---------------------------
@@ -136,8 +139,8 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 //Hexadecimal string color to the color object
 //16进制字符串颜色转为颜色对象
 //SP_COLOR_HEX(@"#1E1E1E");
-#define SP_COLOR_HEX_STR(hexstring) [SPUIKitMacro colorWithHexString:hexstring alpha:1.0f]
-#define SP_COLOR_HEXA_STR(hexstring,alpha) [SPUIKitMacro colorWithHexString:hexstring alpha:alpha]
+#define SP_COLOR_HEX_STR(__hexstring) [SPUIKitMacro colorWithHexString:__hexstring alpha:1.0f]
+#define SP_COLOR_HEXA_STR(__hexstring,__alpha) [SPUIKitMacro colorWithHexString:__hexstring alpha:__alpha]
 
 
 //--------------------image---------------------------
@@ -158,22 +161,6 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 
 //获取图片根据给定颜色
 #define SP_IMAGE_BY_COLOR(color)    [SPUIKitMacro createImageWithColor:color];
-
-
-//--------------------AlertView---------------------------
-//--------------------警告框---------------------------
-
-//#define SP_SHOW_ALERT(message,cancelTitle)   SP_SHOW_ALERTVIEW(0, nil, (message), nil, cancelTitle?:@"确定", nil)
-//
-//#define SP_SHOW_ALERTVIEW(_tag_, title, msg, _delegate_, cancelTitle, ...) {\
-//UIAlertView *alert = [[UIAlertView alloc] initWithTitle: title\
-//message: msg\
-//delegate: _delegate_\
-//cancelButtonTitle: cancelTitle\
-//otherButtonTitles: __VA_ARGS__];\
-//alert.tag = _tag_;\
-//[alert show];\
-//}
 
 
 //--------------------iOS Version---------------------
@@ -205,6 +192,9 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
 #define SP_iOS9_OR_LATER  SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")
 #define SP_iOS10_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10.0")
 #define SP_iOS11_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"11.0")
+#define SP_iOS12_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"12.0")
+#define SP_iOS13_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"13.0")
+#define SP_iOS14_OR_LATER SP_iOS_SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"14.0")
 
 
 //--------------------打印---------------------------
@@ -252,6 +242,10 @@ alpha   :(hexValue & 0xFF)        / (float)0xFF]
  *  @return 符合要求的图片
  */
 + (UIImage *)compressImage:(UIImage*)image toSize:(CGSize)size;
+
+
+/// 判断是否是iPhone X屏幕
++ (BOOL)isIPhoneX;
 
 @end
 

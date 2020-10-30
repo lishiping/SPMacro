@@ -264,41 +264,6 @@
 #define SP_IS_FILE_EXIST(path)  [[NSFileManager defaultManager] fileExistsAtPath:(path)]
 
 
-//--------------Reference counting----------------------
-//--------------------引用计数---------------------------
-
-//判断是不是支持arc模式
-#if __has_feature(objc_arc)
-
-#define OC_Retain(x)            ARC_Retain(x)
-#define OC_Copy(x)              ARC_Copy(x)
-#define OC_Release(x)           ARC_Release(x)
-#define OC_Release_View(x)      ARC_Release_View(x)
-#define OC_SuperDealloc
-
-#else
-
-#define OC_Retain(x)            MRC_Retain(x)
-#define OC_Copy(x)              MRC_Copy(x)
-#define OC_Release(x)           MRC_Release(x)
-#define OC_Release_View(x)      MRC_Release_View(x)
-#define OC_SuperDealloc         MRC_Dealloc(super)
-
-#endif
-
-
-#define MRC_Retain(x)           [(x) retain];
-#define MRC_Copy(x)             [(x) copy];
-#define MRC_Release(x)          {if(x){[(x) release];}}
-#define MRC_Release_View(x)     {if(x){[(x) removeFromSuperview];[(x) release];(x)=nil;}}
-#define MRC_Dealloc(x)          [(x) dealloc];
-
-#define ARC_Retain(x)           (x)
-#define ARC_Copy(x)             (x)
-#define ARC_Release(x)          {(x)=nil;}
-#define ARC_Release_View(x)     {if(x){[(x) removeFromSuperview];(x)=nil;}}
-#define ARC_Dealloc(x)
-
 //--------------------local Language---------------------------
 //--------------------本地语言---------------------------
 
